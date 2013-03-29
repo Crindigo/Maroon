@@ -1,0 +1,16 @@
+{% extends '::base.html.twig' %}
+
+{% block navbar %}
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="{{ path('maroon_rpg_default_index') }}">Maroon Project</a>
+
+            {{ knp_menu_render('MaroonRPGBundle:Builder:frontMenu', {}, 'bootstrap_renderer') }}
+
+            {{ knp_menu_render('MaroonRPGBundle:Builder:frontProfileMenu', {}, 'bootstrap_renderer') }}
+
+        </div>
+    </div>
+</div>
+{% endblock %}

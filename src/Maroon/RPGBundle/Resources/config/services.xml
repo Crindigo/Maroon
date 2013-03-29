@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="maroon_rpg.menu_renderer" class="Maroon\RPGBundle\Menu\BootstrapNavRenderer">
+            <tag name="knp_menu.renderer" alias="bootstrap_renderer" />
+            <argument type="service" id="knp_menu.matcher" />
+            <argument>%kernel.charset%</argument>
+        </service>
+
+        <service id="maroon_rpg.menu.voter.route" class="Maroon\RPGBundle\Menu\RouteVoter" public="false">
+            <tag name="knp_menu.voter" />
+            <argument type="service" id="service_container" />
+        </service>
+    </services>
+    <!--
+    <parameters>
+        <parameter key="maroon_rpg.example.class">Maroon\RPGBundle\Example</parameter>
+    </parameters>
+
+    <services>
+        <service id="maroon_rpg.example" class="%maroon_rpg.example.class%">
+            <argument type="service" id="service_id" />
+            <argument>plain_value</argument>
+            <argument>%parameter_name%</argument>
+        </service>
+    </services>
+    -->
+</container>
