@@ -1,13 +1,39 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Maroon{% endblock %}</title>
+    {% block stylesheets %}
+        {% stylesheets '@MaroonRPGBundle/Resources/public/less/style.less' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+</head>
+<body>
+{% block navbar %}{% endblock %}
+
+<div class="container">
+    {% block body %}{% endblock %}
+</div>
+
+{% block javascripts %}
+    {% javascripts '@MaroonRPGBundle/Resources/public/js/jquery-1.8.1.min.js'
+    '@MaroonRPGBundle/Resources/public/js/bootstrap.min.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}
+
+<footer>
+    <div class="container">
+        <div class="pull-right">
+            <ul>
+                <li><a target="_blank" href="http://github.com/Crindigo/maroon-project">Maroon @ GitHub</a></li>
+                <li><a target="_blank" href="http://crindigo.com/maroon-forum/">Forum</a></li>
+            </ul>
+        </div>
+        <p>Copyright &copy; 2012 Maroon RPG Project</p>
+    </div>
+</footer>
+</body>
 </html>
