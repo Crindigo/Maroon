@@ -23,6 +23,7 @@ namespace Maroon\RPGBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use FOS\UserBundle\Entity\User as BaseUser;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * User entity. Will also need to track money, selected party, # characters allowed. Maybe 1->many for chars.
@@ -48,6 +49,6 @@ class User extends BaseUser
     {
         parent::__construct();
 
-        $this->characters = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->characters = new ArrayCollection();
     }
 }
