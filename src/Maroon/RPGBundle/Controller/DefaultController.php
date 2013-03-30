@@ -5,6 +5,7 @@ namespace Maroon\RPGBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\Yaml\Yaml;
 
 class DefaultController extends Controller
 {
@@ -14,6 +15,14 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return array('name' => 'test');
+        $yaml = Yaml::parse(<<<'YML'
+ArmorEffects.AdjustElementalDamage:
+  elements: {Fire: -50, Ice: 25}
+
+ArmorEffects.AdjustStatusResistance:
+  statuses: {Poison: -25, Silence: 25}
+YML
+        );
+        return array('name' => 'test', 'yml' => print_r($yaml, true));
     }
 }
