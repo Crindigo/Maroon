@@ -4,7 +4,7 @@ imports:
 
 framework:
     #esi:             ~
-    translator:      ~
+    translator:      { fallback: en }
     secret:          %secret%
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -24,6 +24,9 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+    #form:
+    #    resources:
+    #        - 'MaroonRPGBundle:Form:fields.html.twig'
 
 # Assetic Configuration
 assetic:
@@ -73,3 +76,7 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: Maroon\RPGBundle\Entity\User
+
+mopa_bootstrap:
+    form:
+        show_legend: false

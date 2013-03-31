@@ -19,7 +19,7 @@ class DefaultController extends Controller
 ArmorEffects.AdjustElementalDamage:
   elements: {Fire: -50, Ice: 25}
 
-ArmorEffects.AdjustStatusResistance:
+ArmorEffects.AdjustStatusVulnerability:
   statuses: {Poison: -25, Silence: 25}
 YML
         );

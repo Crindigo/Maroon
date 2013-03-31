@@ -67,7 +67,7 @@ class Builder extends ContainerAware
             $this->addDivider($dropdown);
             $dropdown->addChild('Logout', array('route' => 'fos_user_security_logout'))->setExtra('icon', 'remove');
         } else {
-            $menu->addChild('Login', array('route' => 'fos_user_security_login'));
+            $menu->addChild('Log in', array('route' => 'fos_user_security_login'));
             $menu->addChild('Sign up', array('route' => 'fos_user_registration_register'));
         }
 

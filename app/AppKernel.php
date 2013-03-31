@@ -22,6 +22,8 @@ class AppKernel extends Kernel
 			new FOS\UserBundle\FOSUserBundle(),
             new Maroon\RPGBundle\MaroonRPGBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new Mopa\Bundle\BootstrapBundle\MopaBootstrapBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
