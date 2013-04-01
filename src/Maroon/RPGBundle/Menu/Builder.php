@@ -12,16 +12,23 @@ class Builder extends ContainerAware
     {
         /** @var $security SecurityContext */
         $security = $this->container->get('security.context');
+        $userManager = $this->container->get('fos_user.user_manager');
 
         $menu = $factory->createItem('root')->setChildrenAttribute('class', 'nav');
         $menu->addChild('Home', array('route' => 'maroon_rpg_default_index'));
 
         if ( $security->isGranted('ROLE_USER') ) {
-            $characters = $menu->addChild('Characters', array('uri' => '#'));
-            $characters->addChild('Manage Your Parties', array('uri' => '#'));
-            $characters->addChild('Exchange Members', array('uri' => '#'));
-            $characters->addChild('Recruitment Center', array('uri' => '#'));
-            $characters->addChild('Search Characters', array('uri' => '#'));
+            $user = $security->getToken()->getUser();
+
+            if ( !$user->hasCharacters() ) {
+                $menu->addChild('New Character', array('route' => 'maroon_rpg_character_newcharacter'));
+            } else {
+                $characters = $menu->addChild('Characters', array('uri' => '#'));
+                $characters->addChild('Manage Your Party', array('uri' => '#'));
+                //$characters->addChild('Exchange Members', array('uri' => '#'));
+                $characters->addChild('Recruitment Center', array('uri' => '#'));
+                $characters->addChild('Search Characters', array('uri' => '#'));
+            }
 
             $items = $menu->addChild('Items', array('uri' => '#'));
             $items->addChild('View Inventory', array('uri' => '#'));

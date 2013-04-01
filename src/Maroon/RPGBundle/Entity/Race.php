@@ -3,14 +3,15 @@
 namespace Maroon\RPGBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Maroon\RPGBundle\Entity\Race
  *
- * @ORM\Table(name="races")
+ * @ORM\Table(name="rpg_races")
  * @ORM\Entity
  */
-class Race
+class Race implements \JsonSerializable
 {
     /**
      * @var integer $id
@@ -50,8 +51,10 @@ class Race
     private $statsBonus;
 
     /**
+     * @var ArrayCollection $selectableGenders
+     *
      * @ORM\ManyToMany(targetEntity="Gender")
-     * @ORM\JoinTable(name="races_genders",
+     * @ORM\JoinTable(name="rpg_races_genders",
      *   joinColumns={ @ORM\JoinColumn(name="race_id", referencedColumnName="id") },
      *   inverseJoinColumns={ @ORM\JoinColumn(name="gender_id", referencedColumnName="id") }
      * )
@@ -60,7 +63,41 @@ class Race
 
     public function __construct()
     {
-        $this->selectableGenders = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->statsInit = array();
+        $this->statsBonus = array();
+        $this->selectableGenders = new ArrayCollection();
+    }
+
+    public function jsonSerialize()
+    {
+        return array(
+            'id' => $this->id,
+            'name' => $this->name,
+            'description' => $this->description,
+            'statsInit' => $this->statsInit,
+            'statsBonus' => $this->statsBonus,
+            'genders' => $this->getSelectableGenders(),
+        );
+    }
+
+    public function addGender(Gender $gender)
+    {
+        $this->selectableGenders[] = $gender;
+        return $this;
+    }
+
+    public function removeGender(Gender $gender)
+    {
+        $this->selectableGenders->removeElement($gender);
+        return $this;
+    }
+
+    /**
+     * @return Gender[]
+     */
+    public function getSelectableGenders()
+    {
+        return $this->selectableGenders->toArray();
     }
 
     /**

@@ -45,10 +45,35 @@ class User extends BaseUser
      */
     protected $characters;
 
+    /**
+     * @ORM\Column(type="smallint")
+     */
+    protected $characterCount;
+
     public function __construct()
     {
         parent::__construct();
 
+        $this->characterCount = 0;
         $this->characters = new ArrayCollection();
+    }
+
+    public function addCharacter(Character $character)
+    {
+        $this->characters->add($character);
+        $character->setUser($this);
+        $this->characterCount++;
+    }
+
+    public function removeCharacter(Character $character)
+    {
+        $this->characters->removeElement($character);
+        $character->setUser(null);
+        $this->characterCount--;
+    }
+
+    public function hasCharacters()
+    {
+        return $this->characterCount > 0;
     }
 }

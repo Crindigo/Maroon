@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="rpg_genders")
  * @ORM\Entity
  */
-class Gender
+class Gender implements \JsonSerializable
 {
     /**
      * @var integer $id
@@ -48,6 +48,23 @@ class Gender
      * @ORM\Column(name="statsBonus", type="array")
      */
     private $statsBonus;
+
+    public function __construct()
+    {
+        $this->statsInit = array();
+        $this->statsBonus = array();
+    }
+
+    public function jsonSerialize()
+    {
+        return array(
+            'id' => $this->id,
+            'name' => $this->name,
+            'description' => $this->description,
+            'statsInit' => $this->statsInit,
+            'statsBonus' => $this->statsBonus,
+        );
+    }
 
     /**
      * Get id

@@ -1,3 +1,5 @@
+{% from 'MopaBootstrapBundle::flash.html.twig' import session_flash %}
+
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
@@ -14,11 +16,29 @@
 {% block navbar %}{% endblock %}
 
 <div class="container">
+    {% set _headline = block('headline') %}
+    {% if _headline is not empty %}
+        <div class="page-header">
+            <h1>{{ _headline|raw }}</h1>
+        </div>
+    {% endif %}
+
+    {% block flashes %}
+        {% if app.session.flashbag.peekAll|length > 0 %}
+            <div class="row-fluid">
+                <div class="span12">
+                    {{ session_flash() }}
+                </div>
+            </div>
+        {% endif %}
+    {% endblock flashes %}
+
     {% block body %}{% endblock %}
 </div>
 
 {% block javascripts %}
-    {% javascripts '@MaroonRPGBundle/Resources/public/js/jquery-1.9.1.min.js'
+    {% javascripts '@MaroonRPGBundle/Resources/public/js/underscore-min.js'
+    '@MaroonRPGBundle/Resources/public/js/jquery-1.9.1.min.js'
     '@MaroonRPGBundle/Resources/public/js/bootstrap.min.js' %}
     <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
@@ -28,7 +48,7 @@
     <div class="container">
         <div class="pull-right">
             <ul>
-                <li><a target="_blank" href="http://github.com/Crindigo/maroon-project">Maroon @ GitHub</a></li>
+                <li><a target="_blank" href="http://github.com/Crindigo/Maroon">Maroon @ GitHub</a></li>
                 <li><a target="_blank" href="http://crindigo.com/maroon-forum/">Forum</a></li>
             </ul>
         </div>

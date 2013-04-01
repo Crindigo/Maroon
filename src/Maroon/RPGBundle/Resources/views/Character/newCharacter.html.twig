@@ -1,0 +1,42 @@
+{% extends 'MaroonRPGBundle::layout_front.html.twig' %}
+
+{% block headline %}New Character{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="span8">
+            <form class="form-horizontal" action="{{ path('maroon_rpg_character_newcharacter') }}"
+                  method="post" {{ form_enctype(form) }}>
+                {{ form_widget(form) }}
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">Create New Character</button>
+                </div>
+            </form>
+        </div>
+        <div class="span4">
+            <p><strong>Welcome to Maroon</strong>, an open-source web RPG in development that will eventually
+                provide you with deep character customization and many hours of entertainment.</p>
+            <p>To get started, fill out some simple fields to the left to create your main character.
+            Further characters can be rolled for an in-game fee through the recruitment system.</p>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+    $(function() {
+        var races = {{ races|raw }};
+
+        $('#maroon_rpg_new_character_race').change(function() {
+            var $el = $(this);
+            $el.parent().find('p.help-block').html(
+                    _.findWhere(races, {id: parseInt($el.val())}).description);
+        });
+    });
+</script>
+{% endblock %}

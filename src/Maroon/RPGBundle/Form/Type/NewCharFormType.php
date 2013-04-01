@@ -7,9 +7,23 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 class NewCharFormType extends AbstractType
 {
+    private $params = array();
+
+    public function __construct(array $params)
+    {
+        $this->params = $params;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        parent::buildForm($builder, $options);
+        $builder
+            ->add('name', null, array('label' => 'Character Name'))
+            ->add('race', 'choice', array(
+                'label' => 'Race',
+                'choices' => $this->params['races'],
+                'empty_value' => 'Select a race',
+                'help_block' => 'Select a race to view additional details.',
+            ));
     }
 
     /**
@@ -19,6 +33,6 @@ class NewCharFormType extends AbstractType
      */
     public function getName()
     {
-        return 'maroonrpg_new_character';
+        return 'maroon_rpg_new_character';
     }
 }

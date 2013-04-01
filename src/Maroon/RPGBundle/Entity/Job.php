@@ -63,6 +63,12 @@ class Job
      */
     private $statsBonus;
 
+    public function __construct()
+    {
+        $this->statsInit = array();
+        $this->statsBonus = array();
+        $this->equippableGroups = array();
+    }
 
     /**
      * Get id
