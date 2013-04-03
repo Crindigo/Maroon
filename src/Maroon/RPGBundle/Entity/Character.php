@@ -29,6 +29,18 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Character
 {
+    static public $statAliases = array(
+        // hp, mp, maxhp, maxmp, luck not included
+        'atk'  => 'Attack',
+        'def'  => 'Defense',
+        'mag'  => 'Magic',
+        'mdef' => 'MagicDefense',
+        'acc'  => 'Accuracy',
+        'eva'  => 'Evasion',
+        'meva' => 'MagicEvasion',
+        'spd'  => 'Speed',
+    );
+
     /**
      * @var integer
      *
@@ -111,6 +123,7 @@ class Character
      *
      */
     protected $equipment;
+
 
     /**
      * @param CharStats $baseStats

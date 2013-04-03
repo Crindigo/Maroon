@@ -18,6 +18,9 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+        $redis = $this->get('predis.client');
+        $tk = $redis->get('testkey');
+
         $yaml = Yaml::parse(<<<'YML'
 ArmorEffects.AdjustElementalDamage:
   elements: {Fire: -50, Ice: 25}
@@ -26,7 +29,7 @@ ArmorEffects.AdjustStatusVulnerability:
   statuses: {Poison: -25, Silence: 25}
 YML
         );
-        return array('name' => 'test', 'yml' => print_r($yaml, true));
+        return array('name' => 'test', 'yml' => $tk . ' ' . print_r($yaml, true));
     }
 
     /**
@@ -34,33 +37,20 @@ YML
      */
     public function makeRaceAction()
     {
-        $male = new Gender();
-        $male
-            ->setName('Male')
-            ->setDescription('Male characters receive a small boost to physical-related statistics.')
-            ->setStatsBonus(array('hp' => 3, 'str' => 1, 'def' => 1))
-            ->setStatsInit(array('hp' => 10, 'str' => 3, 'def' => 3));
+        $em = $this->getDoctrine()->getManager();
 
-        $female = new Gender();
-        $female
-            ->setName('Female')
-            ->setDescription('Female characters receive a small boost to magical-related statistics.')
-            ->setStatsBonus(array('mp' => 2, 'int' => 1, 'mdef' => 1))
-            ->setStatsInit(array('mp' => 6, 'int' => 3, 'mdef' => 3));
+        $male = $em->getRepository('MaroonRPGBundle:Gender')->findOneBy(array('name' => 'Male'));
+        $female = $em->getRepository('MaroonRPGBundle:Gender')->findOneBy(array('name' => 'Female'));
 
         $race = new Race();
         $race
-            ->setName('Human')
-            ->setDescription('Humans are generally an all-round class. They can use most equipment and access '
-                . 'most classes, but offer no special perks.')
-            ->setStatsBonus(array())
-            ->setStatsInit(array())
+            ->setName('Dwarf')
+            ->setDescription('Dwarves are short in stature but offer improved physical attributes over other races.')
+            ->setStatsBonus(array('hp' => 3, 'atk' => 1, 'def' => 1))
+            ->setStatsInit(array('hp' => 15, 'atk' => 5, 'def' => 5))
             ->addGender($male)
             ->addGender($female);
 
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($male);
-        $em->persist($female);
         $em->persist($race);
         //$em->flush();
 

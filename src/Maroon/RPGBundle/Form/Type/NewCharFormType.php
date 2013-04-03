@@ -23,6 +23,18 @@ class NewCharFormType extends AbstractType
                 'choices' => $this->params['races'],
                 'empty_value' => 'Select a race',
                 'help_block' => 'Select a race to view additional details.',
+            ))
+            ->add('gender', 'choice', array(
+                'label' => 'Gender',
+                'choices' => $this->params['genders'],
+                'empty_value' => 'Select a gender',
+                'help_block' => 'Select a race to view available genders.',
+            ))
+            ->add('job', 'choice', array(
+                'label' => 'Job',
+                'choices' => $this->params['jobs'],
+                'empty_value' => 'Select a job',
+                'help_block' => 'Select a race to view available jobs.',
             ));
     }
 

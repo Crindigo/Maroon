@@ -23,7 +23,8 @@
         "knplabs/knp-menu": "2.0.*@dev",
         "knplabs/knp-menu-bundle": "dev-master",
         "knplabs/knp-paginator-bundle": "dev-master",
-        "mopa/bootstrap-bundle": "dev-master"
+        "mopa/bootstrap-bundle": "dev-master",
+        "predis/predis": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [

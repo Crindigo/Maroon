@@ -30,12 +30,41 @@
 {{ parent() }}
 <script>
     $(function() {
-        var races = {{ races|raw }};
+        var races = Maroon.toCollection({{ races|raw }}, Maroon.Race);
+        var genders = Maroon.toCollection({{ genders|raw }}, Maroon.Gender);
+        var jobs = {{ jobs|raw }};
+        var genderChoices = {{ genderChoices|raw }};
+        var jobChoices = {{ jobChoices|raw }};
 
-        $('#maroon_rpg_new_character_race').change(function() {
-            var $el = $(this);
-            $el.parent().find('p.help-block').html(
-                    _.findWhere(races, {id: parseInt($el.val())}).description);
+        var $race = $('#maroon_rpg_new_character_race');
+        var $gender = $('#maroon_rpg_new_character_gender');
+        var $job = $('#maroon_rpg_new_character_job');
+
+        $race.change(function() {
+            $race.parent().find('p.help-block').html(
+                    _.findWhere(races, {id: parseInt($race.val())}).fmtNewChar());
+
+            // rebuild gender listing
+            $gender.find('> option:gt(0)').remove();
+            _.each(genders, function(gender) {
+                if ( _.indexOf(genderChoices[$race.val()], gender.id) != -1 ) {
+                    var $newOpt = $('<option></option>').attr('value', gender.id).text(gender.name);
+                    $gender.append($newOpt);
+                }
+            });
+            $gender.parent().find('p.help-block').html('Select a gender to view additional details.');
+
+            // rebuild job listing
+            $job.find('> option:gt(0)').remove();
+            _.each(jobs, function(job) {
+
+            });
+            $job.parent().find('p.help-block').html('Select a job to view additional details.');
+        });
+
+        $gender.change(function() {
+            $gender.parent().find('p.help-block').html(
+                    _.findWhere(genders, {id: parseInt($gender.val())}).fmtNewChar());
         });
     });
 </script>

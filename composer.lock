@@ -1,5 +1,5 @@
 {
-    "hash": "992a21280dc59bffca916bb6c4fe513e",
+    "hash": "d97d75ead21ef2205c38cd762e29f870",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1400,16 +1400,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.4.0",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/Seldaek/monolog",
-                "reference": "1.4.0"
+                "url": "https://github.com/Seldaek/monolog.git",
+                "reference": "1.4.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1.4.0",
-                "reference": "1.4.0",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1.4.1",
+                "reference": "1.4.1",
                 "shasum": ""
             },
             "require": {
@@ -1458,7 +1458,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2013-02-13 18:06:51"
+            "time": "2013-04-01 10:04:58"
         },
         {
             "name": "mopa/bootstrap-bundle",
@@ -1467,12 +1467,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phiamo/MopaBootstrapBundle.git",
-                "reference": "52f0be720c1757052d6c2aab8746f390538a7eb6"
+                "reference": "628e17d22c855712b7fef6e080284290885ec3bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phiamo/MopaBootstrapBundle/zipball/52f0be720c1757052d6c2aab8746f390538a7eb6",
-                "reference": "52f0be720c1757052d6c2aab8746f390538a7eb6",
+                "url": "https://api.github.com/repos/phiamo/MopaBootstrapBundle/zipball/628e17d22c855712b7fef6e080284290885ec3bb",
+                "reference": "628e17d22c855712b7fef6e080284290885ec3bb",
                 "shasum": ""
             },
             "require": {
@@ -1520,7 +1520,7 @@
                 "form",
                 "template"
             ],
-            "time": "2013-03-26 19:58:37"
+            "time": "2013-04-01 16:26:55"
         },
         {
             "name": "mopa/composer-bridge",
@@ -1616,6 +1616,53 @@
                 "type"
             ],
             "time": "2013-03-25 02:51:40"
+        },
+        {
+            "name": "predis/predis",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/nrk/predis.git",
+                "reference": "d6fa4a32920e340159ecbc9a5cabaa0e192df021"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/nrk/predis/zipball/d6fa4a32920e340159ecbc9a5cabaa0e192df021",
+                "reference": "d6fa4a32920e340159ecbc9a5cabaa0e192df021",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "suggest": {
+                "ext-curl": "Allows access to Webdis when paired with phpiredis",
+                "ext-phpiredis": "Allows faster serialization and deserialization of the Redis protocol"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Predis": "lib/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Daniele Alessandri",
+                    "email": "suppakilla@gmail.com",
+                    "homepage": "http://clorophilla.net"
+                }
+            ],
+            "description": "Flexible and feature-complete PHP client library for Redis",
+            "homepage": "http://github.com/nrk/predis",
+            "keywords": [
+                "nosql",
+                "predis",
+                "redis"
+            ],
+            "time": "2013-03-30 15:16:13"
         },
         {
             "name": "psr/log",
@@ -2292,7 +2339,8 @@
         "knplabs/knp-menu": 20,
         "knplabs/knp-menu-bundle": 20,
         "knplabs/knp-paginator-bundle": 20,
-        "mopa/bootstrap-bundle": 20
+        "mopa/bootstrap-bundle": 20,
+        "predis/predis": 20
     },
     "platform": {
         "php": ">=5.3.3"

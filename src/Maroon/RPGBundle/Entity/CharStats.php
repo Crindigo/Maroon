@@ -75,7 +75,7 @@ class CharStats
      *
      * @ORM\Column(name="magicdef", type="smallint")
      */
-    private $magicdef;
+    private $magicDefense;
 
     /**
      * @var integer $accuracy
@@ -90,6 +90,13 @@ class CharStats
      * @ORM\Column(name="evasion", type="smallint")
      */
     private $evasion;
+
+    /**
+     * @var integer $magicEvasion
+     *
+     * @ORM\Column(name="magicevasion", type="smallint")
+     */
+    private $magicEvasion;
 
     /**
      * @var integer $speed
@@ -283,9 +290,9 @@ class CharStats
      * @param integer $magicdef
      * @return CharStats
      */
-    public function setMagicdef($magicdef)
+    public function setMagicDefense($magicdef)
     {
-        $this->magicdef = $magicdef;
+        $this->magicDefense = $magicdef;
     
         return $this;
     }
@@ -295,9 +302,9 @@ class CharStats
      *
      * @return integer 
      */
-    public function getMagicdef()
+    public function getMagicDefense()
     {
-        return $this->magicdef;
+        return $this->magicDefense;
     }
 
     /**
@@ -344,6 +351,29 @@ class CharStats
     public function getEvasion()
     {
         return $this->evasion;
+    }
+
+    /**
+     * Set magic evasion
+     *
+     * @param integer $evasion
+     * @return CharStats
+     */
+    public function setMagicEvasion($evasion)
+    {
+        $this->magicEvasion = $evasion;
+
+        return $this;
+    }
+
+    /**
+     * Get magic evasion
+     *
+     * @return integer
+     */
+    public function getMagicEvasion()
+    {
+        return $this->magicEvasion;
     }
 
     /**

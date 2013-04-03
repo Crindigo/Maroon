@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Maroon\RPGBundle\Entity\Race
  *
  * @ORM\Table(name="rpg_races")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Maroon\RPGBundle\Repository\RaceRepository")
  */
 class Race implements \JsonSerializable
 {
@@ -76,7 +76,6 @@ class Race implements \JsonSerializable
             'description' => $this->description,
             'statsInit' => $this->statsInit,
             'statsBonus' => $this->statsBonus,
-            'genders' => $this->getSelectableGenders(),
         );
     }
 

@@ -12,7 +12,6 @@ class Builder extends ContainerAware
     {
         /** @var $security SecurityContext */
         $security = $this->container->get('security.context');
-        $userManager = $this->container->get('fos_user.user_manager');
 
         $menu = $factory->createItem('root')->setChildrenAttribute('class', 'nav');
         $menu->addChild('Home', array('route' => 'maroon_rpg_default_index'));
