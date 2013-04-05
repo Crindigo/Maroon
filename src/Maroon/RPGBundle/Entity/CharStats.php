@@ -36,25 +36,25 @@ class CharStats
     private $maxhp;
 
     /**
-     * @var integer $mp
+     * @var integer $sp
      *
-     * @ORM\Column(name="mp", type="integer")
+     * @ORM\Column(name="sp", type="integer")
      */
-    private $mp;
+    private $sp;
 
     /**
-     * @var integer $maxmp
+     * @var integer $maxsp
      *
-     * @ORM\Column(name="maxmp", type="integer")
+     * @ORM\Column(name="maxsp", type="integer")
      */
-    private $maxmp;
+    private $maxsp;
 
     /**
      * @var integer $attack
      *
-     * @ORM\Column(name="attack", type="smallint")
+     * @ORM\Column(name="strength", type="smallint")
      */
-    private $attack;
+    private $strength;
 
     /**
      * @var integer $defense
@@ -66,9 +66,9 @@ class CharStats
     /**
      * @var integer $magic
      *
-     * @ORM\Column(name="magic", type="smallint")
+     * @ORM\Column(name="intelligence", type="smallint")
      */
-    private $magic;
+    private $intelligence;
 
     /**
      * @var integer $magicdef
@@ -170,72 +170,72 @@ class CharStats
     }
 
     /**
-     * Set mp
+     * Set sp
      *
-     * @param integer $mp
+     * @param integer $sp
      * @return CharStats
      */
-    public function setMp($mp)
+    public function setSp($sp)
     {
-        $this->mp = $mp;
+        $this->sp = $sp;
     
         return $this;
     }
 
     /**
-     * Get mp
+     * Get sp
      *
      * @return integer 
      */
-    public function getMp()
+    public function getSp()
     {
-        return $this->mp;
+        return $this->sp;
     }
 
     /**
-     * Set maxmp
+     * Set maxsp
      *
-     * @param integer $maxmp
+     * @param integer $maxsp
      * @return CharStats
      */
-    public function setMaxmp($maxmp)
+    public function setMaxsp($maxsp)
     {
-        $this->maxmp = $maxmp;
+        $this->maxsp = $maxsp;
     
         return $this;
     }
 
     /**
-     * Get maxmp
+     * Get maxsp
      *
      * @return integer 
      */
-    public function getMaxmp()
+    public function getMaxsp()
     {
-        return $this->maxmp;
+        return $this->maxsp;
     }
 
     /**
-     * Set attack
+     * Set strength
      *
-     * @param integer $attack
+     * @param integer $strength
      * @return CharStats
      */
-    public function setAttack($attack)
+    public function setStrength($strength)
     {
-        $this->attack = $attack;
+        $this->strength = $strength;
     
         return $this;
     }
 
     /**
-     * Get attack
+     * Get strength
      *
      * @return integer 
      */
-    public function getAttack()
+    public function getStrength()
     {
-        return $this->attack;
+        return $this->strength;
     }
 
     /**
@@ -262,26 +262,26 @@ class CharStats
     }
 
     /**
-     * Set magic
+     * Set intelligence
      *
-     * @param integer $magic
+     * @param integer $intelligence
      * @return CharStats
      */
-    public function setMagic($magic)
+    public function setMagic($intelligence)
     {
-        $this->magic = $magic;
+        $this->intelligence = $intelligence;
     
         return $this;
     }
 
     /**
-     * Get magic
+     * Get intelligence
      *
      * @return integer 
      */
-    public function getMagic()
+    public function getIntelligence()
     {
-        return $this->magic;
+        return $this->intelligence;
     }
 
     /**

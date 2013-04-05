@@ -61,11 +61,23 @@ class Race implements \JsonSerializable
      */
     private $selectableGenders;
 
+    /**
+     * @var ArrayCollection $selectableJobs
+     *
+     * @ORM\ManyToMany(targetEntity="Job")
+     * @ORM\JoinTable(name="rpg_races_jobs",
+     *   joinColumns={ @ORM\JoinColumn(name="race_id", referencedColumnName="id") },
+     *   inverseJoinColumns={ @ORM\JoinColumn(name="job_id", referencedColumnName="id") }
+     * )
+     */
+    private $selectableJobs;
+
     public function __construct()
     {
         $this->statsInit = array();
         $this->statsBonus = array();
         $this->selectableGenders = new ArrayCollection();
+        $this->selectableJobs = new ArrayCollection();
     }
 
     public function jsonSerialize()
@@ -97,6 +109,23 @@ class Race implements \JsonSerializable
     public function getSelectableGenders()
     {
         return $this->selectableGenders->toArray();
+    }
+
+    public function addJob(Job $job)
+    {
+        $this->selectableJobs[] = $job;
+        return $this;
+    }
+
+    public function removeJob(Job $job)
+    {
+        $this->selectableJobs->removeElement($job);
+        return $this;
+    }
+
+    public function getSelectableJobs()
+    {
+        return $this->selectableJobs->toArray();
     }
 
     /**

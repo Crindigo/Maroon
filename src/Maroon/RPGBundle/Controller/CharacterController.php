@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Maroon\RPGBundle\Form\Type\NewCharFormType;
 use Maroon\RPGBundle\Entity\Gender;
+use Maroon\RPGBundle\Entity\Job;
 
 class CharacterController extends Controller
 {
@@ -25,7 +26,7 @@ class CharacterController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         /** @var $races \Maroon\RPGBundle\Entity\Race[] */
-        $races = $em->getRepository('MaroonRPGBundle:Race')->findWithGenders();
+        $races = $em->getRepository('MaroonRPGBundle:Race')->findWithGendersAndJobs();
 
         /** @var $genders \Maroon\RPGBundle\Entity\Gender[] */
         $genders = $em->getRepository('MaroonRPGBundle:Gender')->findBy([], ['name' => 'ASC']);
@@ -41,20 +42,16 @@ class CharacterController extends Controller
             $options['races'][$race->getId()] = $race->getName();
             $genderAvailability[$race->getId()] =
                 array_map(function(Gender $g) { return $g->getId(); }, $race->getSelectableGenders());
-            $jobAvailability[$race->getId()] = array();
-            //    array_map(function(Job $j) { return $j->getId(); }, []);
-        }
-        foreach ( $genders as $gender ) {
-            //$options['genders'][$gender->getId()] = $gender->getName();
-        }
-        foreach ( $jobs as $job ) {
-            //$options['jobs'][$job->getId()] = $job->getName();
+            $jobAvailability[$race->getId()] =
+                array_map(function(Job $j) { return $j->getId(); }, $race->getSelectableJobs());
         }
 
         //$this->get('logger')->info(print_r($races[0]->getSelectableGenders(), true));
 
         $char = array();
         $form = $this->createForm(new NewCharFormType($options), $char);
+
+        $baseStats = $this->container->getParameter('maroon_rpg.base_stats');
 
         return array(
             'form' => $form->createView(),
@@ -63,6 +60,7 @@ class CharacterController extends Controller
             'jobs' => json_encode($jobs),
             'genderChoices' => json_encode($genderAvailability),
             'jobChoices' => json_encode($jobAvailability),
+            'baseStats' => json_encode($baseStats),
         );
     }
 }

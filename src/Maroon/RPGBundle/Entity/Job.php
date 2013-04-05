@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="rpg_jobs")
  * @ORM\Entity(repositoryClass="Maroon\RPGBundle\Repository\JobRepository")
  */
-class Job
+class Job implements \JsonSerializable
 {
     /**
      * @var integer $id
@@ -68,6 +68,17 @@ class Job
         $this->statsInit = array();
         $this->statsBonus = array();
         $this->equippableGroups = array();
+    }
+
+    public function jsonSerialize()
+    {
+        return array(
+            'id' => $this->id,
+            'name' => $this->name,
+            'description' => $this->description,
+            'statsInit' => $this->statsInit,
+            'statsBonus' => $this->statsBonus,
+        );
     }
 
     /**

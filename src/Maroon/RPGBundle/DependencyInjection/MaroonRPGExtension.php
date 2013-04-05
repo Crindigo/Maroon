@@ -24,5 +24,14 @@ class MaroonRPGExtension extends Extension
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
+
+        //$ymlLoader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        //$ymlLoader->load('maroon.yml');
+
+        //foreach ( $config['base_stats'] as $stat => $value ) {
+        //    $container->setParameter('maroon_rpg.base_stats.' . $stat, $value);
+        //}
+
+        $container->setParameter('maroon_rpg.base_stats', $config['base_stats']);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Maroon\RPGBundle\Controller;
 
+use Doctrine\Common\Persistence\ObjectManager;
+use Maroon\RPGBundle\Entity\Job;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -39,19 +41,22 @@ YML
     {
         $em = $this->getDoctrine()->getManager();
 
-        $male = $em->getRepository('MaroonRPGBundle:Gender')->findOneBy(array('name' => 'Male'));
-        $female = $em->getRepository('MaroonRPGBundle:Gender')->findOneBy(array('name' => 'Female'));
+        $human = $em->getRepository('MaroonRPGBundle:Race')->findOneBy(array('name' => 'Human'));
+        $dwarf = $em->getRepository('MaroonRPGBundle:Race')->findOneBy(array('name' => 'Dwarf'));
 
-        $race = new Race();
-        $race
-            ->setName('Dwarf')
-            ->setDescription('Dwarves are short in stature but offer improved physical attributes over other races.')
-            ->setStatsBonus(array('hp' => 3, 'atk' => 1, 'def' => 1))
-            ->setStatsInit(array('hp' => 15, 'atk' => 5, 'def' => 5))
-            ->addGender($male)
-            ->addGender($female);
+        $job = new Job();
+        $job
+            ->setName('Mage')
+            ->setDescription('Job specializing in wielding staves and casting a variety of magic spells.')
+            ->setEquippableGroups(array())
+            ->setRequirements(array())
+            ->setStatsInit(array('sp' => 15, 'int' => 10, 'mdef' => 10))
+            ->setStatsBonus(array('sp' => 3, 'int' => 2, 'mdef' => 2));
 
-        $em->persist($race);
+        $human->addJob($job);
+        $dwarf->addJob($job);
+
+        $em->persist($job);
         //$em->flush();
 
         return new Response('hello there');

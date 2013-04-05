@@ -1,0 +1,13 @@
+maroon_rpg:
+    base_stats:
+        hp: 100
+        sp: 40
+        str: 10
+        def: 10
+        int: 10
+        mdef: 10
+        acc: 10
+        eva: 10
+        meva: 10
+        spd: 10
+        luck: 10

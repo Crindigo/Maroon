@@ -30,15 +30,21 @@ use Doctrine\ORM\Mapping as ORM;
 class Character
 {
     static public $statAliases = array(
-        // hp, mp, maxhp, maxmp, luck not included
-        'atk'  => 'Attack',
+        'hp'    => 'Hp',
+        'maxhp' => 'Maxhp',
+        'sp'    => 'Sp',
+        'maxsp' => 'Maxsp',
+
+        'str'  => 'Strength',
         'def'  => 'Defense',
-        'mag'  => 'Magic',
+        'int'  => 'Intelligence',
         'mdef' => 'MagicDefense',
+
         'acc'  => 'Accuracy',
         'eva'  => 'Evasion',
         'meva' => 'MagicEvasion',
         'spd'  => 'Speed',
+        'luck' => 'Luck',
     );
 
     /**
@@ -124,6 +130,35 @@ class Character
      */
     protected $equipment;
 
+    public function getStat($stat)
+    {
+        if ( !isset(self::$statAliases[$stat]) ) {
+            throw new \InvalidArgumentException('Invalid statistic type');
+        }
+
+        $statMethod = 'get' . self::$statAliases[$stat];
+        return $this->getStats()->$statMethod();
+    }
+
+    public function setStat($stat, $value)
+    {
+        if ( !isset(self::$statAliases[$stat]) ) {
+            throw new \InvalidArgumentException('Invalid statistic type');
+        }
+
+        $statMethod = 'set' . self::$statAliases[$stat];
+        $this->getStats()->$statMethod($value);
+
+        return $this;
+    }
+
+    /**
+     * Rebuilds the $stats of this character based on $baseStats and equipment effects
+     */
+    public function rebuildStats()
+    {
+
+    }
 
     /**
      * @param CharStats $baseStats

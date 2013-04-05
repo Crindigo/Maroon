@@ -14,11 +14,29 @@
                 </div>
             </form>
         </div>
-        <div class="span4">
+        <div class="span4 side-help">
             <p><strong>Welcome to Maroon</strong>, an open-source web RPG in development that will eventually
                 provide you with deep character customization and many hours of entertainment.</p>
             <p>To get started, fill out some simple fields to the left to create your main character.
             Further characters can be rolled for an in-game fee through the recruitment system.</p>
+            <br />
+
+            <h4>Initial Stats</h4>
+            <dl class="dl-horizontal initial-stats">
+                <dt>Health Points (HP)</dt><dd id="init-hp">&nbsp;</dd>
+                <dt>Skill Points (SP)</dt><dd id="init-sp">&nbsp;</dd>
+                <dt>&nbsp;</dt><dd>&nbsp;</dd>
+                <dt>Strength (STR)</dt><dd id="init-str">&nbsp;</dd>
+                <dt>Defense (DEF)</dt><dd id="init-def">&nbsp;</dd>
+                <dt>Intelligence (INT)</dt><dd id="init-int">&nbsp;</dd>
+                <dt>Magic Def. (MDEF)</dt><dd id="init-mdef">&nbsp;</dd>
+                <dt>&nbsp;</dt><dd>&nbsp;</dd>
+                <dt>Accuracy (ACC)</dt><dd id="init-acc">&nbsp;</dd>
+                <dt>Evasion (EVA)</dt><dd id="init-eva">&nbsp;</dd>
+                <dt>Magic Eva. (MEVA)</dt><dd id="init-meva">&nbsp;</dd>
+                <dt>Speed (SPD)</dt><dd id="init-spd">&nbsp;</dd>
+                <dt>Luck (LUCK)</dt><dd id="init-luck">&nbsp;</dd>
+            </dl>
         </div>
     </div>
 
@@ -32,16 +50,35 @@
     $(function() {
         var races = Maroon.toCollection({{ races|raw }}, Maroon.Race);
         var genders = Maroon.toCollection({{ genders|raw }}, Maroon.Gender);
-        var jobs = {{ jobs|raw }};
+        var jobs = Maroon.toCollection({{ jobs|raw }}, Maroon.Job);
         var genderChoices = {{ genderChoices|raw }};
         var jobChoices = {{ jobChoices|raw }};
+        var baseStats = {{ baseStats|raw }};
 
         var $race = $('#maroon_rpg_new_character_race');
         var $gender = $('#maroon_rpg_new_character_gender');
         var $job = $('#maroon_rpg_new_character_job');
 
+        var rebuildStats = function() {
+            var raceVal = $race.val(), genderVal = $gender.val(), jobVal = $job.val();
+
+            var curRace   = raceVal   ? _.findWhere(races, {id: parseInt(raceVal)})     : false;
+            var curGender = genderVal ? _.findWhere(genders, {id: parseInt(genderVal)}) : false;
+            var curJob    = jobVal    ? _.findWhere(jobs, {id: parseInt(jobVal)})       : false;
+
+            _.each(baseStats, function(baseValue, stat) {
+                var value = baseValue;
+                if ( curRace )   { value += curRace.statsInit[stat] || 0; }
+                if ( curGender ) { value += curGender.statsInit[stat] || 0; }
+                if ( curJob )    { value += curJob.statsInit[stat] || 0; }
+
+                $('#init-' + stat).text(value);
+            });
+        };
+        rebuildStats();
+
         $race.change(function() {
-            $race.parent().find('p.help-block').html(
+            $race.siblings('p.help-block').html(
                     _.findWhere(races, {id: parseInt($race.val())}).fmtNewChar());
 
             // rebuild gender listing
@@ -52,19 +89,31 @@
                     $gender.append($newOpt);
                 }
             });
-            $gender.parent().find('p.help-block').html('Select a gender to view additional details.');
+            $gender.siblings('p.help-block').html('Select a gender to view additional details.');
 
             // rebuild job listing
             $job.find('> option:gt(0)').remove();
             _.each(jobs, function(job) {
-
+                if ( _.indexOf(jobChoices[$race.val()], job.id) != -1 ) {
+                    var $newOpt = $('<option></option>').attr('value', job.id).text(job.name);
+                    $job.append($newOpt);
+                }
             });
-            $job.parent().find('p.help-block').html('Select a job to view additional details.');
+            $job.siblings('p.help-block').html('Select a job to view additional details.');
+
+            rebuildStats();
         });
 
         $gender.change(function() {
-            $gender.parent().find('p.help-block').html(
+            $gender.siblings('p.help-block').html(
                     _.findWhere(genders, {id: parseInt($gender.val())}).fmtNewChar());
+            rebuildStats();
+        });
+
+        $job.change(function() {
+            $job.siblings('p.help-block').html(
+                    _.findWhere(jobs, {id: parseInt($job.val())}).fmtNewChar());
+            rebuildStats();
         });
     });
 </script>

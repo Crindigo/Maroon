@@ -24,6 +24,27 @@ class Configuration implements ConfigurationInterface
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
 
+        $rootNode
+            ->children()
+                ->arrayNode('base_stats')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->integerNode('hp')->defaultValue(100)->end()
+                        ->integerNode('sp')->defaultValue(40)->end()
+                        ->integerNode('str')->defaultValue(10)->end()
+                        ->integerNode('def')->defaultValue(10)->end()
+                        ->integerNode('int')->defaultValue(10)->end()
+                        ->integerNode('mdef')->defaultValue(10)->end()
+                        ->integerNode('acc')->defaultValue(10)->end()
+                        ->integerNode('eva')->defaultValue(10)->end()
+                        ->integerNode('meva')->defaultValue(10)->end()
+                        ->integerNode('spd')->defaultValue(10)->end()
+                        ->integerNode('luck')->defaultValue(10)->end()
+                    ->end()
+                ->end()
+            ->end();
+
+
         return $treeBuilder;
     }
 }

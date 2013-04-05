@@ -13,11 +13,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class RaceRepository extends EntityRepository
 {
-    public function findWithGenders()
+    public function findWithGendersAndJobs()
     {
         $query = $this->getEntityManager()->createQuery('
-            SELECT r, g FROM MaroonRPGBundle:Race r
+            SELECT r, g, j FROM MaroonRPGBundle:Race r
             JOIN r.selectableGenders g
+            JOIN r.selectableJobs j
             ORDER BY r.name ASC
         ');
 
