@@ -59,6 +59,9 @@
         var $gender = $('#maroon_rpg_new_character_gender');
         var $job = $('#maroon_rpg_new_character_job');
 
+        $gender.find('> option:gt(0)').remove();
+        $job.find('> option:gt(0)').remove();
+
         var rebuildStats = function() {
             var raceVal = $race.val(), genderVal = $gender.val(), jobVal = $job.val();
 

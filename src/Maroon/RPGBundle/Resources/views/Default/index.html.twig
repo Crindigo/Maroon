@@ -54,9 +54,8 @@
 
         <h3>Quick Stats</h3>
         <ul>
-            <li>Characters: 0 / 16</li>
-            <li>Parties: 2 / 8</li>
-            <li>Credits: 1,848</li>
+            <li>Characters: {{ app.user.characterCount }} / 16</li>
+            <li>Credits: {{ app.user.money|number_format }}</li>
             <li>Active Battles: 0</li>
         </ul>
     </div>

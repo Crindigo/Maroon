@@ -50,6 +50,12 @@ class User extends BaseUser
      */
     protected $characterCount;
 
+    /**
+     * @var int
+     * @ORM\Column(type="integer")
+     */
+    protected $money;
+
     public function __construct()
     {
         parent::__construct();
@@ -75,5 +81,21 @@ class User extends BaseUser
     public function hasCharacters()
     {
         return $this->characterCount > 0;
+    }
+
+    public function getCharacterCount()
+    {
+        return $this->characterCount;
+    }
+
+    public function getMoney()
+    {
+        return $this->money;
+    }
+
+    public function setMoney($money)
+    {
+        $this->money = $money;
+        return $this;
     }
 }

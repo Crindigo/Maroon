@@ -12,6 +12,24 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class CharStats
 {
+    static public $statAliases = array(
+        'hp'    => 'Hp',
+        'maxhp' => 'Maxhp',
+        'sp'    => 'Sp',
+        'maxsp' => 'Maxsp',
+
+        'str'  => 'Strength',
+        'def'  => 'Defense',
+        'int'  => 'Intelligence',
+        'mdef' => 'MagicDefense',
+
+        'acc'  => 'Accuracy',
+        'eva'  => 'Evasion',
+        'meva' => 'MagicEvasion',
+        'spd'  => 'Speed',
+        'luck' => 'Luck',
+    );
+
     /**
      * @var integer $id
      *
@@ -112,6 +130,26 @@ class CharStats
      */
     private $luck;
 
+    public function get($stat)
+    {
+        if ( !isset(self::$statAliases[$stat]) ) {
+            throw new \InvalidArgumentException('Invalid statistic type');
+        }
+
+        $statMethod = 'get' . self::$statAliases[$stat];
+        return $this->$statMethod();
+    }
+
+    public function set($stat, $value)
+    {
+        if ( !isset(self::$statAliases[$stat]) ) {
+        throw new \InvalidArgumentException('Invalid statistic type');
+        }
+
+        $statMethod = 'set' . self::$statAliases[$stat];
+        $this->$statMethod($value);
+        return $this;
+    }
 
     /**
      * Get id
@@ -267,7 +305,7 @@ class CharStats
      * @param integer $intelligence
      * @return CharStats
      */
-    public function setMagic($intelligence)
+    public function setIntelligence($intelligence)
     {
         $this->intelligence = $intelligence;
     
