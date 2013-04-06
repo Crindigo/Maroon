@@ -52,12 +52,37 @@
     </div>
     <div class="span4 quick-stats">
 
-        <h3>Quick Stats</h3>
+        <h3>Stats</h3>
         <ul>
             <li>Characters: {{ app.user.characterCount }} / 16</li>
             <li>Credits: {{ app.user.money|number_format }}</li>
-            <li>Active Battles: 0</li>
         </ul>
+
+        <h4>Your Party</h4>
+
+        <strong>Indigo</strong> <span class="muted bio">Rogue</span>
+        <div class="hpsp">
+            {{ maroon_stat_bar('hp', 2389, 3793) }}
+            {{ maroon_stat_bar('sp', 105, 211) }}
+        </div>
+
+        <strong>Stratus</strong> <span class="muted bio">Paladin</span>
+        <div class="hpsp">
+            {{ maroon_stat_bar('hp', 3882, 5104) }}
+            {{ maroon_stat_bar('sp', 88, 140) }}
+        </div>
+
+        <strong>Crimson</strong> <span class="muted bio">Dark Knight</span>
+        <div class="hpsp">
+            {{ maroon_stat_bar('hp', 0, 4491) }}
+            {{ maroon_stat_bar('sp', 129, 187) }}
+        </div>
+
+        <strong>Aruze</strong> <span class="muted bio">Priest</span>
+        <div class="hpsp">
+            {{ maroon_stat_bar('hp', 2782, 3097) }}
+            {{ maroon_stat_bar('sp', 49, 304) }}
+        </div>
     </div>
 </div>
 {% endblock %}

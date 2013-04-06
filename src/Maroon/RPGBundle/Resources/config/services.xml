@@ -19,6 +19,10 @@
         <service id="predis.client" class="Predis\Client">
             <argument>%redis_url%</argument>
         </service>
+
+        <service id="maroon.twig.maroon_extension" class="Maroon\RPGBundle\Twig\MaroonExtension">
+            <tag name="twig.extension" />
+        </service>
     </services>
     <!--
     <parameters>

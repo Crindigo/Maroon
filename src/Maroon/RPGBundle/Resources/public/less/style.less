@@ -4,7 +4,7 @@ body {
   padding-top: 50px;
 }
 
-div.side-help {
+div.side-help, div.quick-stats {
   border-left: 2px solid #e8e8e8;
   margin-left: 10px;
   padding-left: 8px;
@@ -12,6 +12,68 @@ div.side-help {
 
 dl.initial-stats > dt {
   color: #444;
+}
+
+.progress.progress-relative {
+  position: relative;
+}
+
+.progress-hp .bar, .progress .bar-hp {
+  #gradient > .vertical(#54a854, #4a8f4a);
+}
+.progress-sp .bar, .progress .bar-sp {
+  #gradient > .vertical(#51abc4, #2c859e);
+}
+progress-empty .bar, .progress .bar-empty {
+  #gradient > .vertical(#c9c9c9, #b0b0b0);
+}
+
+.progress span {
+  position: absolute;
+  top: 0px;
+  z-index: 2;
+  color: #fff;
+  text-align: center;
+  width: 100%;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  font-size: 12px;
+}
+
+div.hpsp {
+  .progress {
+    width: 47%;
+    float: left;
+    margin-right: 8px;
+  }
+
+  .progress .bar + .bar {
+    //.box-shadow(~"inset 1px 0 0 rgba(0,0,0,.15), inset 0 -1px 0 rgba(0,0,0,.15)");
+    .box-shadow(~"none");
+  }
+
+  .progress span.warning {
+    color: #ff0;
+    font-weight: bold;
+    //text-shadow: none;
+  }
+
+  .progress span.dead {
+    color: #f00;
+    font-weight: bold;
+    text-shadow: none;
+  }
+}
+
+div.quick-stats {
+
+  span.bio {
+    font-size: 12px;
+  }
+
+  div.hpsp .progress {
+   width: 143px;
+    margin-right: 7px;
+  }
 }
 
 footer {
