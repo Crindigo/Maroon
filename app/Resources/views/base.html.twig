@@ -17,9 +17,10 @@
 
 <div class="container">
     {% set _headline = block('headline') %}
+    {% set _subheadline = block('sub_headline') %}
     {% if _headline is not empty %}
         <div class="page-header">
-            <h1>{{ _headline|raw }}</h1>
+            <h1>{{ _headline|raw }}{% if _subheadline is not empty %} <small>{{ _subheadline|raw }}</small>{% endif %}</h1>
         </div>
     {% endif %}
 

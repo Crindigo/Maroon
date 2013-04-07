@@ -70,14 +70,7 @@ class Character
      *
      * @ORM\ManyToOne(targetEntity="Job")
      */
-    protected $primaryJob;
-
-    /**
-     * @var Job
-     *
-     * @ORM\ManyToOne(targetEntity="Job")
-     */
-    protected $secondaryJob;
+    protected $job;
 
     /**
      * @var integer
@@ -262,18 +255,18 @@ class Character
      * @param Job $primaryJob
      * @return Character
      */
-    public function setPrimaryJob(Job $primaryJob)
+    public function setJob(Job $primaryJob)
     {
-        $this->primaryJob = $primaryJob;
+        $this->job = $primaryJob;
         return $this;
     }
 
     /**
      * @return Job
      */
-    public function getPrimaryJob()
+    public function getJob()
     {
-        return $this->primaryJob;
+        return $this->job;
     }
 
     /**
@@ -292,24 +285,6 @@ class Character
     public function getRace()
     {
         return $this->race;
-    }
-
-    /**
-     * @param Job $secondaryJob
-     * @return Character
-     */
-    public function setSecondaryJob(Job $secondaryJob)
-    {
-        $this->secondaryJob = $secondaryJob;
-        return $this;
-    }
-
-    /**
-     * @return Job
-     */
-    public function getSecondaryJob()
-    {
-        return $this->secondaryJob;
     }
 
     /**

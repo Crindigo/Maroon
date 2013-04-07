@@ -3,12 +3,40 @@
 namespace Maroon\RPGBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\NoResultException;
 use Maroon\RPGBundle\Entity\CharStats;
 use Maroon\RPGBundle\Entity\Character;
 use Maroon\RPGBundle\Entity\User;
 
 class CharacterRepository extends EntityRepository
 {
+    /**
+     * Finds a character and includes race/gender/current job information in the result.
+     *
+     * @param $id
+     * @return Character|null
+     */
+    public function findWithExtras($id)
+    {
+        $query = $this->_em->createQuery('
+            SELECT c, r, g, j
+            FROM MaroonRPGBundle:Character c
+            JOIN c.race r
+            JOIN c.gender g
+            JOIN c.job j
+            WHERE c.id = :id
+        ');
+        $query->setParameter('id', $id);
+
+        try {
+            $character = $query->getSingleResult();
+        } catch ( NoResultException $e ) {
+            $character = null;
+        }
+
+        return $character;
+    }
+
     /**
      * Creates a new character record in the database, called from the new character form.
      * Race, gender, and job are all pre-verified so we are go to take care of DB stuff.
@@ -66,8 +94,7 @@ class CharacterRepository extends EntityRepository
             ->setStats($stats)
             ->setRace($race)
             ->setGender($gender)
-            ->setPrimaryJob($job);
-            //->setSecondaryJob(null);
+            ->setJob($job);
 
         $user->addCharacter($char);
 

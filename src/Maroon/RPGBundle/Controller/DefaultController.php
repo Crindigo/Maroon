@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Maroon\RPGBundle\Entity\Gender;
 use Maroon\RPGBundle\Entity\Race;
 
-class DefaultController extends Controller
+class DefaultController extends MaroonController
 {
     /**
      * @Route("/")
@@ -39,10 +39,8 @@ YML
      */
     public function makeRaceAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $human = $em->getRepository('MaroonRPGBundle:Race')->findOneBy(array('name' => 'Human'));
-        $dwarf = $em->getRepository('MaroonRPGBundle:Race')->findOneBy(array('name' => 'Dwarf'));
+        $human = $this->repo('Race')->findOneBy(array('name' => 'Human'));
+        $dwarf = $this->repo('Race')->findOneBy(array('name' => 'Dwarf'));
 
         $job = new Job();
         $job
@@ -56,8 +54,8 @@ YML
         $human->addJob($job);
         $dwarf->addJob($job);
 
-        $em->persist($job);
-        //$em->flush();
+        $this->em()->persist($job);
+        //$this->em()->flush();
 
         return new Response('hello there');
     }

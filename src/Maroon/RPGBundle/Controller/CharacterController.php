@@ -2,7 +2,7 @@
 
 namespace Maroon\RPGBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Maroon\RPGBundle\Entity\Character;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
@@ -11,7 +11,7 @@ use Maroon\RPGBundle\Entity\Gender;
 use Maroon\RPGBundle\Entity\Job;
 use Symfony\Component\Form\FormError;
 
-class CharacterController extends Controller
+class CharacterController extends MaroonController
 {
     /**
      * @Secure(roles="ROLE_USER")
@@ -21,19 +21,19 @@ class CharacterController extends Controller
     public function newCharacterAction()
     {
         if ( $this->getUser()->hasCharacters() ) {
-            $this->get('session')->getFlashBag()->add('info', 'Additional characters are gained through recruitment.');
+            $this->flash('info', 'Additional characters are gained through recruitment.');
             return $this->redirect($this->generateUrl('maroon_rpg_default_index'));
         }
 
         $em = $this->getDoctrine()->getManager();
         /** @var $races \Maroon\RPGBundle\Entity\Race[] */
-        $races = $em->getRepository('MaroonRPGBundle:Race')->findWithGendersAndJobs();
+        $races = $this->repo('Race')->findWithGendersAndJobs();
 
         /** @var $genders \Maroon\RPGBundle\Entity\Gender[] */
-        $genders = $em->getRepository('MaroonRPGBundle:Gender')->findBy([], ['name' => 'ASC']);
+        $genders = $this->repo('Gender')->findBy([], ['name' => 'ASC']);
 
         /** @var $jobs \Maroon\RPGBundle\Entity\Job[] */
-        $jobs = $em->getRepository('MaroonRPGBundle:Job')->findBy([], ['name' => 'ASC']);
+        $jobs = $this->repo('Job')->findBy([], ['name' => 'ASC']);
 
         $options = ['races' => [], 'genders' => [], 'jobs' => []];
         $genderAvailability = [];
@@ -79,10 +79,9 @@ class CharacterController extends Controller
 
                 if ( $valid ) {
                     // add the character
-                    $em->getRepository('MaroonRPGBundle:Character')->createNewCharacter(
-                        $data, $baseStats, $this->getUser());
+                    $this->repo('Character')->createNewCharacter($data, $baseStats, $this->getUser());
 
-                    $this->get('session')->getFlashBag()->add('success', '<strong>Congratulations!</strong> You\'ve created your first character. To get more, access the Recruitment Center option in the Character menu.');
+                    $this->flash('success', '<strong>Congratulations!</strong> You\'ve created your first character. To get more, access the Recruitment Center option in the Character menu.');
                     return $this->redirect($this->generateUrl('maroon_rpg_default_index'));
                 }
             }
@@ -99,5 +98,24 @@ class CharacterController extends Controller
             'jobChoices' => json_encode($jobAvailability),
             'baseStats' => json_encode($baseStats),
         );
+    }
+
+    /**
+     * @Secure(roles="ROLE_USER")
+     * @Route("/character/{id}", requirements={"id" = "\d+"})
+     * @Template
+     *
+     * @param int $id
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @return array
+     */
+    public function showAction($id)
+    {
+        $character = $this->repo('Character')->findWithExtras($id);
+        if ( !$character ) {
+            throw $this->createNotFoundException('Character not found.');
+        }
+
+        return array('character' => $character);
     }
 }
