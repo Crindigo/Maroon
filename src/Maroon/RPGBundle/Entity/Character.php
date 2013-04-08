@@ -19,6 +19,7 @@
 
 namespace Maroon\RPGBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -101,9 +102,16 @@ class Character
     protected $stats;
 
     /**
+     * @var ArrayCollection
      *
+     * @ORM\OneToMany(targetEntity="Equipment", mappedBy="character")
      */
     protected $equipment;
+
+    public function __construct()
+    {
+        $this->equipment = new ArrayCollection();
+    }
 
     public function getStat($stat)
     {
@@ -132,7 +140,13 @@ class Character
      */
     public function rebuildStats()
     {
+        $base = $this->getBaseStats();
 
+        /** @var $equip Equipment */
+        foreach ( $this->getEquipment() as $equip ) {
+            $item = $equip->getItem();
+            $data = $equip->getItemData();
+        }
     }
 
     /**
@@ -154,17 +168,17 @@ class Character
     }
 
     /**
-     * @param $equipment
+     * @param ArrayCollection $equipment
      * @return Character
      */
-    public function setEquipment($equipment)
+    public function setEquipment(ArrayCollection $equipment)
     {
         $this->equipment = $equipment;
         return $this;
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
     public function getEquipment()
     {
