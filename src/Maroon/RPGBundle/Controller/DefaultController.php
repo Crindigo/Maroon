@@ -20,11 +20,8 @@ class DefaultController extends MaroonController
      */
     public function indexAction()
     {
-        $redis = $this->get('predis.client');
-        $tk = $redis->get('testkey');
-
         $yaml = Yaml::dump(['Armor.AdjustDamageType' => ['fire' => -50, 'ice' => 25], 'Armor.AdjustStatusVulnerability' => ['poison' => -25, 'silence' => 25]]);
-        return array('name' => 'test', 'yml' => $tk . ' ' . $yaml);
+        return array('name' => 'test', 'yml' => $yaml);
     }
 
     /**
