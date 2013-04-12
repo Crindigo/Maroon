@@ -10,4 +10,5 @@
 /Maroon.iml
 /.idea/
 /app/config/parameters.yml
+/app/config/deploy.rb
 *~
