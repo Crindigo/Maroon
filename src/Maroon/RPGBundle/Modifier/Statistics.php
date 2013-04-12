@@ -5,6 +5,7 @@ namespace Maroon\RPGBundle\Modifier;
 use Maroon\RPGBundle\Entity\CharStats;
 use Maroon\RPGBundle\Model\Character;
 use Maroon\RPGBundle\Model\Item;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 // $item->runModifiers('equip', $character)
 // $item->runModifiers('unequip', $character)
@@ -109,8 +110,15 @@ class Statistics extends Modifier
         }
     }
 
-    public function validateConfiguration(array $config)
+    /**
+     * @param array $config
+     * @param ContainerInterface $container
+     * @return array
+     */
+    public function validateConfiguration(array $config, ContainerInterface $container)
     {
+        // possibly mess with validating statistics based on $container->getParameter('maroon_rpg.base_stats') keys?
+
         // convert 'hp' and 'sp' keys to 'maxhp' and 'maxsp'
         if ( isset($config['hp']) ) {
             $config['maxhp'] = $config['hp'];
@@ -130,6 +138,6 @@ class Statistics extends Modifier
             unset($config['pct_sp']);
         }
 
-        return parent::validateConfiguration($config);
+        return parent::validateConfiguration($config, $container);
     }
 }

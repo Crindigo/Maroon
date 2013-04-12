@@ -12,6 +12,10 @@ use Maroon\RPGBundle\Entity\Item as ItemEntity;
  */
 class Item
 {
+    // (logging a defense formula here before i forget)
+    // physical dmg reduction = defense / (10 * enemy_level + defense)
+    // at 5000 def against enemy lv 100 results in 84% reduction of damage
+
     /**
      * @var array
      */

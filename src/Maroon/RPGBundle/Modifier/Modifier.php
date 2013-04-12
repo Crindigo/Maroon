@@ -2,6 +2,8 @@
 
 namespace Maroon\RPGBundle\Modifier;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
 /**
  * Top-level abstract class for the modifier system. Defines simple methods to get a name and description.
  *
@@ -114,10 +116,11 @@ abstract class Modifier
      * throws a ConfigurationException.
      *
      * @param array $config
-     * @return array Coerced config
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      * @throws ConfigurationException
+     * @return array Coerced config
      */
-    public function validateConfiguration(array $config)
+    public function validateConfiguration(array $config, ContainerInterface $container)
     {
         $spec = $this->getConfigSpec();
 

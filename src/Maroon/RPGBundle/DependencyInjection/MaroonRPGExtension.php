@@ -33,5 +33,7 @@ class MaroonRPGExtension extends Extension
         //}
 
         $container->setParameter('maroon_rpg.base_stats', $config['base_stats']);
+        $container->setParameter('maroon_rpg.attack_types.physical', $config['attack_types']['physical']);
+        $container->setParameter('maroon_rpg.attack_types.magical', $config['attack_types']['magical']);
     }
 }

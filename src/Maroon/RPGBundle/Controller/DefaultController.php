@@ -23,15 +23,8 @@ class DefaultController extends MaroonController
         $redis = $this->get('predis.client');
         $tk = $redis->get('testkey');
 
-        $yaml = Yaml::parse(<<<'YML'
-ArmorEffects.AdjustElementalDamage:
-  elements: {Fire: -50, Ice: 25}
-
-ArmorEffects.AdjustStatusVulnerability:
-  statuses: {Poison: -25, Silence: 25}
-YML
-        );
-        return array('name' => 'test', 'yml' => $tk . ' ' . print_r($yaml, true));
+        $yaml = Yaml::dump(['Armor.AdjustDamageType' => ['fire' => -50, 'ice' => 25], 'Armor.AdjustStatusVulnerability' => ['poison' => -25, 'silence' => 25]]);
+        return array('name' => 'test', 'yml' => $tk . ' ' . $yaml);
     }
 
     /**

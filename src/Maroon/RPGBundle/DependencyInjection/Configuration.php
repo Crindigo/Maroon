@@ -24,8 +24,25 @@ class Configuration implements ConfigurationInterface
         // configure your bundle. See the documentation linked above for
         // more information on that topic.
 
+        // attack_types:
+        //   physical: [physical, blunt, pierce, slash]
+        //   magical: [magic, fire, ice, electric, water, earth, wind, holy, shadow, gravity]
+
         $rootNode
             ->children()
+                ->arrayNode('attack_types')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->arrayNode('physical')
+                            ->defaultValue(['physical', 'blunt', 'pierce', 'slash'])
+                            ->prototype('scalar')->end()
+                        ->end()
+                        ->arrayNode('magical')
+                            ->defaultValue(['magic', 'fire', 'ice', 'electric', 'water', 'earth', 'wind', 'holy', 'shadow', 'gravity'])
+                            ->prototype('scalar')->end()
+                        ->end()
+                    ->end()
+                ->end()
                 ->arrayNode('base_stats')
                     ->addDefaultsIfNotSet()
                     ->children()
