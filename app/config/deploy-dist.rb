@@ -23,7 +23,7 @@ set :use_composer, true
 set :branch, "master"
 set :group_writable, false
 default_run_options[:pty] = true
-#before "symfony:cache:warmup", "symfony:doctrine:migrations:migrate"
+before "symfony:cache:warmup", "symfony:doctrine:migrations:migrate"
 
 # Be more verbose by uncommenting the following line
 logger.level = Logger::MAX_LEVEL
