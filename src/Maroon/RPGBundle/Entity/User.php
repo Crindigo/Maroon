@@ -62,6 +62,7 @@ class User extends BaseUser
 
         $this->characterCount = 0;
         $this->characters = new ArrayCollection();
+        $this->money = 0;
     }
 
     public function addCharacter(Character $character)
