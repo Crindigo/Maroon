@@ -143,7 +143,7 @@ class CharStats
     public function set($stat, $value)
     {
         if ( !isset(self::$statAliases[$stat]) ) {
-        throw new \InvalidArgumentException('Invalid statistic type');
+            throw new \InvalidArgumentException('Invalid statistic type');
         }
 
         $statMethod = 'set' . self::$statAliases[$stat];
