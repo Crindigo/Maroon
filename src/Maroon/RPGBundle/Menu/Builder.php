@@ -3,6 +3,7 @@
 namespace Maroon\RPGBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
+use Knp\Menu\ItemInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\Security\Core\SecurityContext;
 
@@ -87,20 +88,26 @@ class Builder extends ContainerAware
         $menu->addChild('Dashboard', array('route' => 'maroon_rpg_admin_default_index'));
 
         $database = $menu->addChild('Database', array('uri' => '#'));
+        $this->addHeader($database, 'Items & Types');
         $database->addChild('Items', array('uri' => '#'));
-        $database->addChild('Item Groups', array('uri' => '#'));
+        $database->addChild('Item Types', array('uri' => '#'));
+        $database->addChild('Item Sets', array('uri' => '#'));
+        $this->addHeader($database, 'Skills & Talents');
         $database->addChild('Skills', array('uri' => '#'));
-        $database->addChild('Talents', array('uri' => '#'));
         $database->addChild('Status Effects', array('uri' => '#'));
+        $database->addChild('Talents', array('uri' => '#'));
+        $this->addHeader($database, 'Mobs');
+        $database->addChild('Enemies', array('uri' => '#'));
+        $database->addChild('Enemy Formations', array('uri' => '#'));
 
         $chars = $menu->addChild('Characters', array('uri' => '#'));
+        $this->addHeader($chars, 'Search');
         $chars->addChild('Search Users', array('uri' => '#'));
         $chars->addChild('Search Characters', array('uri' => '#'));
         $this->addHeader($chars, 'Customization');
-        $chars->addChild('Job Classes', array('uri' => '#'));
-        $chars->addChild('Races', array('uri' => '#'));
+        $chars->addChild('Races', array('route' => 'admin_race'));
         $chars->addChild('Genders', array('uri' => '#'));
-
+        $chars->addChild('Job Classes', array('uri' => '#'));
 
         $world = $menu->addChild('World', array('uri' => '#'));
         $world->addChild('Locations', array('uri' => '#'));
@@ -115,12 +122,12 @@ class Builder extends ContainerAware
         // likely not necessary
     }
 
-    protected function addDivider(\Knp\Menu\ItemInterface $item)
+    protected function addDivider(ItemInterface $item)
     {
         $item->addChild('')->setExtra('divider', true);
     }
 
-    protected function addHeader(\Knp\Menu\ItemInterface $item, $label)
+    protected function addHeader(ItemInterface $item, $label)
     {
         $item->addChild($label)->setExtra('header', true);
     }

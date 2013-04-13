@@ -1,0 +1,81 @@
+{% extends 'MaroonRPGBundle::layout_admin.html.twig' %}
+
+{% block headline %}New Race{% endblock %}
+
+{% block body -%}
+    <form class="form-horizontal" action="{{ path('admin_race_create') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_row(form.name) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.selectableGenders) }}
+        {{ form_row(form.selectableJobs) }}
+
+        <div class="control-group">
+            <label class="control-label">Initial Stats</label>
+            <div class="stats-add-on controls">
+                {% for st in stats[0:4] %}
+                    {{ form_widget(form['statsInit:' ~ st]) }}
+                    &nbsp;
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="stats-add-on controls">
+                {% for st in stats[4:4] %}
+                    {{ form_widget(form['statsInit:' ~ st]) }}
+                    &nbsp;
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="stats-add-on controls">
+                {% for st in stats[8:4] %}
+                    {{ form_widget(form['statsInit:' ~ st]) }}
+                    &nbsp;
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label">Stats Per Level</label>
+            <div class="stats-add-on controls">
+                {% for st in stats[0:4] %}
+                    {{ form_widget(form['statsBonus:' ~ st]) }}
+                    &nbsp;
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="stats-add-on controls">
+                {% for st in stats[4:4] %}
+                    {{ form_widget(form['statsBonus:' ~ st]) }}
+                    &nbsp;
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="stats-add-on controls">
+                {% for st in stats[8:4] %}
+                    {{ form_widget(form['statsBonus:' ~ st]) }}
+                    &nbsp;
+                {% endfor %}
+            </div>
+        </div>
+
+        {{ form_rest(form) }}
+        <div class="form-actions">
+            <button class="btn btn-primary" type="submit">Create</button>
+        </div>
+    </form>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('admin_race') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+{% endblock %}

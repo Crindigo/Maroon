@@ -5342,6 +5342,10 @@ div.quick-stats div.hpsp .progress {
   width: 143px;
   margin-right: 7px;
 }
+.stats-add-on .input-prepend span.add-on {
+  width: 40px;
+  text-align: right;
+}
 footer {
   margin-top: 15px;
 }
