@@ -9,11 +9,14 @@
         {{ form_row(form.selectableGenders) }}
         {{ form_row(form.selectableJobs) }}
 
+        {# {{ form_row(form.statsInit) }} #}
+
+
         <div class="control-group">
             <label class="control-label">Initial Stats</label>
             <div class="stats-add-on controls">
-                {% for st in stats[0:4] %}
-                    {{ form_widget(form['statsInit:' ~ st]) }}
+                {% for st in form.statsInit[0:4] %}
+                    {{ form_widget(st) }}
                     &nbsp;
                 {% endfor %}
             </div>
@@ -21,8 +24,8 @@
 
         <div class="control-group">
             <div class="stats-add-on controls">
-                {% for st in stats[4:4] %}
-                    {{ form_widget(form['statsInit:' ~ st]) }}
+                {% for st in form.statsInit[4:4] %}
+                    {{ form_widget(st) }}
                     &nbsp;
                 {% endfor %}
             </div>
@@ -30,18 +33,19 @@
 
         <div class="control-group">
             <div class="stats-add-on controls">
-                {% for st in stats[8:4] %}
-                    {{ form_widget(form['statsInit:' ~ st]) }}
+                {% for st in form.statsInit[8:4] %}
+                    {{ form_widget(st) }}
                     &nbsp;
                 {% endfor %}
             </div>
         </div>
+
 
         <div class="control-group">
             <label class="control-label">Stats Per Level</label>
             <div class="stats-add-on controls">
-                {% for st in stats[0:4] %}
-                    {{ form_widget(form['statsBonus:' ~ st]) }}
+                {% for st in form.statsBonus[0:4] %}
+                    {{ form_widget(st) }}
                     &nbsp;
                 {% endfor %}
             </div>
@@ -49,8 +53,8 @@
 
         <div class="control-group">
             <div class="stats-add-on controls">
-                {% for st in stats[4:4] %}
-                    {{ form_widget(form['statsBonus:' ~ st]) }}
+                {% for st in form.statsBonus[4:4] %}
+                    {{ form_widget(st) }}
                     &nbsp;
                 {% endfor %}
             </div>
@@ -58,8 +62,8 @@
 
         <div class="control-group">
             <div class="stats-add-on controls">
-                {% for st in stats[8:4] %}
-                    {{ form_widget(form['statsBonus:' ~ st]) }}
+                {% for st in form.statsBonus[8:4] %}
+                    {{ form_widget(st) }}
                     &nbsp;
                 {% endfor %}
             </div>

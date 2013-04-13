@@ -2,22 +2,15 @@
 
 namespace Maroon\RPGBundle\Form\Type;
 
+use Maroon\RPGBundle\Entity\CharStats;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class RaceType extends AbstractType
 {
-    private $statKeys = array();
-
-    public function __construct(array $statKeys)
-    {
-        $this->statKeys = $statKeys;
-    }
-
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
         $builder
             ->add('name')
             ->add('description', 'textarea', ['attr' => ['rows' => 3]])
@@ -25,7 +18,7 @@ class RaceType extends AbstractType
                 'label' => 'Selectable Genders',
                 'class' => 'MaroonRPGBundle:Gender',
                 'property' => 'name',
-                //'expanded' => true,
+                'expanded' => true,
                 'multiple' => true,
             ))
             ->add('selectableJobs', 'entity', array(
@@ -35,37 +28,9 @@ class RaceType extends AbstractType
                 'expanded' => true,
                 'multiple' => true,
             ))
+            ->add('statsInit', new StatType())
+            ->add('statsBonus', new StatType())
         ;
-
-        $first = true;
-        foreach ( $this->statKeys as $stat ) {
-            $builder->add("statsInit:$stat", 'integer', [
-                'label_render' => $first,
-                'label' => 'Initial Stats',
-                'widget_controls_attr' => ['class' => 'stats-add-on'],
-                'widget_addon' => [
-                    'type' => 'prepend',
-                    'text' => strtoupper($stat) . ':',
-                ],
-                'attr' => ['class' => 'input-mini'],
-            ]);
-            $first = false;
-        }
-
-        $first = true;
-        foreach ( $this->statKeys as $stat ) {
-            $builder->add("statsBonus:$stat", 'integer', [
-                'label_render' => $first,
-                'label' => 'Bonus per Level',
-                'widget_controls_attr' => ['class' => 'stats-add-on'],
-                'widget_addon' => [
-                    'type' => 'prepend',
-                    'text' => strtoupper($stat) . ':',
-                ],
-                'attr' => ['class' => 'input-mini'],
-            ]);
-            $first = false;
-        }
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

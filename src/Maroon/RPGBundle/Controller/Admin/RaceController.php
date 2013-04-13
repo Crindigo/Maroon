@@ -45,13 +45,13 @@ class RaceController extends MaroonController
      */
     public function createAction(Request $request)
     {
-        $statKeys = array_keys($this->container->getParameter('maroon_rpg.base_stats'));
-
-        $entity  = new Race();
-        $form = $this->createForm(new RaceType($statKeys), $entity);
+        $entity  = [];
+        $form = $this->createForm(new RaceType(), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
+            print_r($form->getData());
+            exit;
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
@@ -78,10 +78,10 @@ class RaceController extends MaroonController
 
         $entity = [];
         foreach ( $statKeys as $stat ) {
-            $entity['statsInit:' . $stat] = 0;
-            $entity['statsBonus:' . $stat] = 0;
+            $entity['statsInit'][$stat] = 0;
+            $entity['statsBonus'][$stat] = 0;
         }
-        $form   = $this->createForm(new RaceType($statKeys), $entity);
+        $form   = $this->createForm(new RaceType(), $entity);
 
         return array(
             'entity' => $entity,
@@ -124,8 +124,6 @@ class RaceController extends MaroonController
      */
     public function editAction($id)
     {
-        $statKeys = array_keys($this->container->getParameter('maroon_rpg.base_stats'));
-
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('MaroonRPGBundle:Race')->find($id);
@@ -134,7 +132,7 @@ class RaceController extends MaroonController
             throw $this->createNotFoundException('Unable to find Race entity.');
         }
 
-        $editForm = $this->createForm(new RaceType($statKeys), $entity);
+        $editForm = $this->createForm(new RaceType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -153,7 +151,6 @@ class RaceController extends MaroonController
      */
     public function updateAction(Request $request, $id)
     {
-        $statKeys = array_keys($this->container->getParameter('maroon_rpg.base_stats'));
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('MaroonRPGBundle:Race')->find($id);
@@ -163,7 +160,7 @@ class RaceController extends MaroonController
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new RaceType($statKeys), $entity);
+        $editForm = $this->createForm(new RaceType(), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
