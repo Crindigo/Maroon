@@ -50,7 +50,7 @@ Maroon.Race.prototype = {
         }
         if ( _.size(this.statsBonus) > 0 ) {
             p = '';
-            _.each(this.statsInit, function(v, k) {
+            _.each(this.statsBonus, function(v, k) {
                 if ( v == 0 ) return;
                 p += ' ' + k.toUpperCase() + (v > 0 ? '+' : '') + v;
             });
@@ -92,7 +92,7 @@ Maroon.Gender.prototype = {
         }
         if ( _.size(this.statsBonus) > 0 ) {
             p = '';
-            _.each(this.statsInit, function(v, k) {
+            _.each(this.statsBonus, function(v, k) {
                 if ( v == 0 ) return;
                 p += ' ' + k.toUpperCase() + (v > 0 ? '+' : '') + v;
             });
@@ -133,7 +133,7 @@ Maroon.Job.prototype = {
         }
         if ( _.size(this.statsBonus) > 0 ) {
             p = '';
-            _.each(this.statsInit, function(v, k) {
+            _.each(this.statsBonus, function(v, k) {
                 if ( v == 0 ) return;
                 p += ' ' + k.toUpperCase() + (v > 0 ? '+' : '') + v;
             });
