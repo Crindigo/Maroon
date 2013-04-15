@@ -2,6 +2,7 @@
 
 namespace Maroon\RPGBundle\Repository;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 use Maroon\RPGBundle\Entity\CharStats;
@@ -89,7 +90,7 @@ class CharacterRepository extends EntityRepository
             ->setName($name)
             ->setLevel(1)
             ->setExperience(0)
-            ->setEquipment(null)
+            ->setEquipment(new ArrayCollection())
             ->setBaseStats($baseStats)
             ->setStats($stats)
             ->setRace($race)
