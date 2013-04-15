@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @package Maroon\RPGBundle\Modifier
  */
-abstract class Modifier
+abstract class AbstractModifier
 {
     /**
      * Contains info parsed from the modifier configuration.
@@ -103,9 +103,9 @@ abstract class Modifier
      * The situation arises if you have a base item, and a user/character has an inventory/equipment
      * record that "extends" the base item with extra data, including extra modifiers.
      *
-     * @param Modifier $other
+     * @param AbstractModifier $other
      */
-    public function mergeConfiguration(Modifier $other)
+    public function mergeConfiguration(AbstractModifier $other)
     {
         $this->config = array_merge($this->config, $other->config);
     }
@@ -116,7 +116,7 @@ abstract class Modifier
      * throws a ConfigurationException.
      *
      * @param array $config
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param ContainerInterface $container
      * @throws ConfigurationException
      * @return array Coerced config
      */
@@ -168,8 +168,15 @@ abstract class Modifier
                     if ( $max > $min ) {
                         throw new ConfigurationException($key, 'Range min is lower than max');
                     }
-                    $config[$key] = min($max, max($min, $config[$key]));
+                    $config[$key] = $this->clampRange($config[$key], $min, $max);
                 }
+            } else if ( $type == 'boolean' ) {
+                if ( $config[$key] == 'true' ) {
+                    $config[$key] = true;
+                } else if ( $config[$key] == 'false' ) {
+                    $config[$key] = false;
+                }
+                $config[$key] = (bool) $config[$key];
             } else {
                 throw new ConfigurationException($key, 'Invalid parameter type: ' . $type);
             }
@@ -177,5 +184,10 @@ abstract class Modifier
 
         // strip out config keys that are not in $spec
         return array_intersect_key($config, $spec);
+    }
+
+    protected function clampRange($num, $min, $max)
+    {
+        return min($max, max($min, $num));
     }
 }

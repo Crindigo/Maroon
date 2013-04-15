@@ -1,10 +1,10 @@
 {% extends 'MaroonRPGBundle::layout_admin.html.twig' %}
 
-{% block headline %}New Race{% endblock %}
+{% block headline %}New Race<span id="race_name"></span>{% endblock %}
 
 {% block body -%}
     <form class="form-horizontal" action="{{ path('admin_race_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_row(form.name) }}
+        {{ form_row(form.name, {'attr': {'data-bind': '#race_name', 'data-bindprefix': ': '}}) }}
         {{ form_row(form.description) }}
         {{ form_row(form.selectableGenders) }}
         {{ form_row(form.selectableJobs) }}
@@ -72,14 +72,8 @@
         {{ form_rest(form) }}
         <div class="form-actions">
             <button class="btn btn-primary" type="submit">Create</button>
+            <a href="{{ path('admin_race') }}" class="btn btn-inverse pull-right">Back to List</a>
         </div>
     </form>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('admin_race') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
 {% endblock %}

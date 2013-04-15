@@ -104,11 +104,17 @@ class Race implements \JsonSerializable
     }
 
     /**
-     * @return Gender[]
+     * @return ArrayCollection
      */
     public function getSelectableGenders()
     {
-        return $this->selectableGenders->toArray();
+        return $this->selectableGenders;
+    }
+
+    public function setSelectableGenders(ArrayCollection $genders)
+    {
+        $this->selectableGenders = $genders;
+        return $this;
     }
 
     public function addJob(Job $job)
@@ -123,9 +129,18 @@ class Race implements \JsonSerializable
         return $this;
     }
 
+    /**
+     * @return ArrayCollection
+     */
     public function getSelectableJobs()
     {
-        return $this->selectableJobs->toArray();
+        return $this->selectableJobs;
+    }
+
+    public function setSelectableJobs(ArrayCollection $jobs)
+    {
+        $this->selectableJobs =  $jobs;
+        return $this;
     }
 
     /**

@@ -28,16 +28,16 @@ class RaceType extends AbstractType
                 'expanded' => true,
                 'multiple' => true,
             ))
-            ->add('statsInit', new StatType())
-            ->add('statsBonus', new StatType())
+            ->add('statsInit', new StatsType())
+            ->add('statsBonus', new StatsType())
         ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        //$resolver->setDefaults(array(
-        //    'data_class' => 'Maroon\RPGBundle\Entity\Race'
-        //));
+        $resolver->setDefaults(array(
+            'data_class' => 'Maroon\RPGBundle\Entity\Race'
+        ));
     }
 
     public function getName()

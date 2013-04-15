@@ -6,7 +6,7 @@ use Maroon\RPGBundle\Entity\CharStats;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class StatType extends AbstractType
+class StatsType extends AbstractType
 {
     public function __construct()
     {
@@ -32,6 +32,6 @@ class StatType extends AbstractType
 
     public function getName()
     {
-        return 'maroon_rpg_stat';
+        return 'maroon_rpg_stats';
     }
 }

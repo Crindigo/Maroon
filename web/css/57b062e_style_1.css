@@ -5346,6 +5346,78 @@ div.quick-stats div.hpsp .progress {
   width: 40px;
   text-align: right;
 }
+.centered {
+  text-align: center;
+}
+form.form-delete {
+  margin-bottom: 0;
+}
+.navbar-maroon .nav > .active > a,
+.navbar-maroon .nav > .active > a:hover,
+.navbar-maroon .nav > .active > a:focus {
+  -webkit-box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.425);
+  -moz-box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.425);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.425);
+}
+.navbar-maroon .navbar-inner {
+  background-color: #930000;
+  background-image: -moz-linear-gradient(top, #a00000, #800000);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#a00000), to(#800000));
+  background-image: -webkit-linear-gradient(top, #a00000, #800000);
+  background-image: -o-linear-gradient(top, #a00000, #800000);
+  background-image: linear-gradient(to bottom, #a00000, #800000);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffa00000', endColorstr='#ff800000', GradientType=0);
+  border-bottom: none;
+}
+.navbar-maroon .brand,
+.navbar-maroon .nav > li > a {
+  color: #eaeaea;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+}
+.navbar-maroon .brand:hover,
+.navbar-maroon .nav > li > a:hover,
+.navbar-maroon .brand:focus,
+.navbar-maroon .nav > li > a:focus {
+  color: #fff;
+}
+.navbar-maroon .brand {
+  color: #eaeaea;
+}
+.navbar-maroon .navbar-text {
+  color: #999999;
+}
+.navbar-maroon .nav > li > a:focus,
+.navbar-maroon .nav > li > a:hover {
+  color: #fff;
+}
+.navbar-maroon .nav .active > a,
+.navbar-maroon .nav .active > a:hover,
+.navbar-maroon .nav .active > a:focus {
+  color: #fff;
+  background-color: #a00000;
+}
+.navbar-maroon .nav li.dropdown.open > .dropdown-toggle,
+.navbar-maroon .nav li.dropdown.active > .dropdown-toggle,
+.navbar-maroon .nav li.dropdown.open.active > .dropdown-toggle {
+  background-color: #a00000;
+  color: #fff;
+}
+.navbar-maroon .nav li.dropdown > a:hover .caret,
+.navbar-maroon .nav li.dropdown > a:focus .caret {
+  border-top-color: #fff;
+  border-bottom-color: #fff;
+}
+.navbar-maroon .nav li.dropdown > .dropdown-toggle .caret {
+  border-top-color: #eaeaea;
+  border-bottom-color: #eaeaea;
+}
+.navbar-maroon .nav li.dropdown.open > .dropdown-toggle .caret,
+.navbar-maroon .nav li.dropdown.active > .dropdown-toggle .caret,
+.navbar-maroon .nav li.dropdown.open.active > .dropdown-toggle .caret {
+  border-top-color: #fff;
+  border-bottom-color: #fff;
+}
 footer {
   margin-top: 15px;
 }

@@ -13,4 +13,15 @@ class Character
     {
 
     }
+
+    /**
+     * Maybe!
+     *
+     * Collects all modifiers for this character, organizes them by type + event, and merges duplicates.
+     * Result can be cached somewhere.
+     */
+    public function collectModifiers()
+    {
+
+    }
 }

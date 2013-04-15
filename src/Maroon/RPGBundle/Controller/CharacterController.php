@@ -42,9 +42,9 @@ class CharacterController extends MaroonController
         foreach ( $races as $race ) {
             $options['races'][$race->getId()] = $race->getName();
             $genderAvailability[$race->getId()] =
-                array_map(function(Gender $g) { return $g->getId(); }, $race->getSelectableGenders());
+                $race->getSelectableGenders()->map(function(Gender $g) { return $g->getId(); })->toArray();
             $jobAvailability[$race->getId()] =
-                array_map(function(Job $j) { return $j->getId(); }, $race->getSelectableJobs());
+                $race->getSelectableJobs()->map(function(Job $j) { return $j->getId(); })->toArray();
         }
 
         foreach ( $genders as $gender ) {

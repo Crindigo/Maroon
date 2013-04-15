@@ -16,6 +16,20 @@ return(!i||i!==r&&!b.contains(r,i))&&(e.type=o.origType,n=o.handler.apply(this,a
 
 var Maroon = {};
 
+$(function() {
+    $('input[data-bind][type="text"]').keyup(function() {
+        var $el = $(this);
+        var $tgt = $($el.data('bind'));
+        if ( $tgt.length ) {
+            var v = $el.val(), p;
+            if (v.length && (p = $el.data('bindprefix')) ) {
+                v = p + v;
+            }
+            $tgt.text(v);
+        }
+    });
+});
+
 Maroon.toCollection = function(list, type) {
     return _.map(list, function(v) { return new type(v); });
 };
@@ -35,17 +49,26 @@ Maroon.Race.prototype = {
 
     fmtNewChar: function() {
         var html = this.description;
+        var p;
         if ( _.size(this.statsInit) > 0 ) {
-            html += '<br><strong>Initial Stat Bonuses:</strong>';
+            p = '';
             _.each(this.statsInit, function(v, k) {
-                html += ' ' + k.toUpperCase() + (v > 0 ? '+' : '') + v;
+                if ( v == 0 ) return;
+                p += ' ' + k.toUpperCase() + (v > 0 ? '+' : '') + v;
             });
+            if ( p.length ) {
+                html += '<br><strong>Initial Stat Bonuses:</strong>' + p;
+            }
         }
         if ( _.size(this.statsBonus) > 0 ) {
-            html += '<br><strong>Level-up Stat Bonuses: </strong>';
-            _.each(this.statsBonus, function(v, k) {
-                html += ' ' + k.toUpperCase() + (v > 0 ? '+' : '') + v;
+            p = '';
+            _.each(this.statsInit, function(v, k) {
+                if ( v == 0 ) return;
+                p += ' ' + k.toUpperCase() + (v > 0 ? '+' : '') + v;
             });
+            if ( p.length ) {
+                html += '<br><strong>Level-up Stat Bonuses:</strong>' + p;
+            }
         }
 
         return html;
@@ -68,17 +91,26 @@ Maroon.Gender.prototype = {
 
     fmtNewChar: function() {
         var html = this.description;
+        var p;
         if ( _.size(this.statsInit) > 0 ) {
-            html += '<br><strong>Initial Stat Bonuses:</strong>';
+            p = '';
             _.each(this.statsInit, function(v, k) {
-                html += ' ' + k.toUpperCase() + (v > 0 ? '+' : '') + v;
+                if ( v == 0 ) return;
+                p += ' ' + k.toUpperCase() + (v > 0 ? '+' : '') + v;
             });
+            if ( p.length ) {
+                html += '<br><strong>Initial Stat Bonuses:</strong>' + p;
+            }
         }
         if ( _.size(this.statsBonus) > 0 ) {
-            html += '<br><strong>Level-up Stat Bonuses: </strong>';
-            _.each(this.statsBonus, function(v, k) {
-                html += ' ' + k.toUpperCase() + (v > 0 ? '+' : '') + v;
+            p = '';
+            _.each(this.statsInit, function(v, k) {
+                if ( v == 0 ) return;
+                p += ' ' + k.toUpperCase() + (v > 0 ? '+' : '') + v;
             });
+            if ( p.length ) {
+                html += '<br><strong>Level-up Stat Bonuses:</strong>' + p;
+            }
         }
 
         return html;
@@ -100,17 +132,26 @@ Maroon.Job.prototype = {
 
     fmtNewChar: function() {
         var html = this.description;
+        var p;
         if ( _.size(this.statsInit) > 0 ) {
-            html += '<br><strong>Initial Stat Bonuses:</strong>';
+            p = '';
             _.each(this.statsInit, function(v, k) {
-                html += ' ' + k.toUpperCase() + (v > 0 ? '+' : '') + v;
+                if ( v == 0 ) return;
+                p += ' ' + k.toUpperCase() + (v > 0 ? '+' : '') + v;
             });
+            if ( p.length ) {
+                html += '<br><strong>Initial Stat Bonuses:</strong>' + p;
+            }
         }
         if ( _.size(this.statsBonus) > 0 ) {
-            html += '<br><strong>Level-up Stat Bonuses: </strong>';
-            _.each(this.statsBonus, function(v, k) {
-                html += ' ' + k.toUpperCase() + (v > 0 ? '+' : '') + v;
+            p = '';
+            _.each(this.statsInit, function(v, k) {
+                if ( v == 0 ) return;
+                p += ' ' + k.toUpperCase() + (v > 0 ? '+' : '') + v;
             });
+            if ( p.length ) {
+                html += '<br><strong>Level-up Stat Bonuses:</strong>' + p;
+            }
         }
 
         return html;

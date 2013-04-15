@@ -22,7 +22,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @package Maroon\RPGBundle\Modifier
  */
-class Statistics extends Modifier
+class Statistics extends AbstractModifier
 {
     public function onEquip(Item $item, $character)
     {
@@ -61,11 +61,7 @@ class Statistics extends Modifier
     public function getEvents()
     {
         return [
-            'item' => [
-                'equip' => 'onEquip',
-                'unequip' => 'onUnequip',
-                'rebuildStats' => 'onRebuildStats',
-            ]
+            'item' => ['equip', 'unequip', 'rebuildStats'],
         ];
     }
 

@@ -45,23 +45,20 @@ class RaceController extends MaroonController
      */
     public function createAction(Request $request)
     {
-        $entity  = [];
-        $form = $this->createForm(new RaceType(), $entity);
+        $race = new Race();
+        $form = $this->createForm(new RaceType(), $race);
         $form->bind($request);
 
         if ($form->isValid()) {
-            print_r($form->getData());
-            exit;
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+            $this->em()->persist($race);
+            $this->em()->flush();
 
-            return $this->redirect($this->generateUrl('admin_race_show', array('id' => $entity->getId())));
+            $this->flash('success', 'Race added');
+            return $this->redirect($this->generateUrl('admin_race', array('id' => $race->getId())));
         }
 
         return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -76,42 +73,21 @@ class RaceController extends MaroonController
     {
         $statKeys = array_keys($this->container->getParameter('maroon_rpg.base_stats'));
 
-        $entity = [];
+        $entity = new Race();
+
+        $zeros = array();
         foreach ( $statKeys as $stat ) {
-            $entity['statsInit'][$stat] = 0;
-            $entity['statsBonus'][$stat] = 0;
+            $zeros[$stat] = 0;
         }
+        $entity->setStatsInit($zeros);
+        $entity->setStatsBonus($zeros);
+
         $form   = $this->createForm(new RaceType(), $entity);
 
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
             'stats'  => $statKeys,
-        );
-    }
-
-    /**
-     * Finds and displays a Race entity.
-     *
-     * @Route("/{id}", name="admin_race_show")
-     * @Method("GET")
-     * @Template()
-     */
-    public function showAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('MaroonRPGBundle:Race')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Race entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
         );
     }
 
@@ -124,11 +100,12 @@ class RaceController extends MaroonController
      */
     public function editAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
+        $statKeys = array_keys($this->container->getParameter('maroon_rpg.base_stats'));
 
-        $entity = $em->getRepository('MaroonRPGBundle:Race')->find($id);
+        /** @var $entity Race */
+        $entity = $this->repo('Race')->find($id);
 
-        if (!$entity) {
+        if ( !$entity ) {
             throw $this->createNotFoundException('Unable to find Race entity.');
         }
 
@@ -137,6 +114,7 @@ class RaceController extends MaroonController
 
         return array(
             'entity'      => $entity,
+            'stats'       => $statKeys,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
@@ -167,7 +145,8 @@ class RaceController extends MaroonController
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_race_edit', array('id' => $id)));
+            $this->flash('success', 'Race updated');
+            return $this->redirect($this->generateUrl('admin_race', array('id' => $id)));
         }
 
         return array(
