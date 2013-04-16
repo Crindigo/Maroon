@@ -52,7 +52,7 @@ class Configuration implements ConfigurationInterface
                         ->integerNode('def')->defaultValue(10)->end()
                         ->integerNode('int')->defaultValue(10)->end()
                         ->integerNode('mdef')->defaultValue(10)->end()
-                        ->integerNode('acc')->defaultValue(10)->end()
+                        ->integerNode('dex')->defaultValue(10)->end()
                         ->integerNode('eva')->defaultValue(10)->end()
                         ->integerNode('meva')->defaultValue(10)->end()
                         ->integerNode('spd')->defaultValue(10)->end()

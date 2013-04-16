@@ -1,6 +1,6 @@
 {% extends 'MaroonRPGBundle::layout_front.html.twig' %}
 
-{% block headline %}New Character{% endblock %}
+{% block headline %}New Character<span id="char_name"></span>{% endblock %}
 
 {% block body %}
 
@@ -8,7 +8,8 @@
         <div class="span8">
             <form class="form-horizontal" action="{{ path('maroon_rpg_character_newcharacter') }}"
                   method="post" {{ form_enctype(form) }}>
-                {{ form_widget(form) }}
+                {{ form_row(form.name, {'attr': {'data-bind': '#char_name', 'data-bindprefix': ': '}}) }}
+                {{ form_rest(form) }}
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">Create New Character</button>
                 </div>
@@ -29,8 +30,8 @@
                 <dt>&nbsp;</dt><dd>&nbsp;</dd>
 
                 <dt>Strength (STR)</dt><dd id="init-str">&nbsp;</dd>
+                <dt>Dexterity (DEX)</dt><dd id="init-dex">&nbsp;</dd>
                 <dt>Intelligence (INT)</dt><dd id="init-int">&nbsp;</dd>
-                <dt>Accuracy (ACC)</dt><dd id="init-acc">&nbsp;</dd>
 
                 <dt>&nbsp;</dt><dd>&nbsp;</dd>
 

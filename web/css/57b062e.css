@@ -5418,6 +5418,9 @@ form.form-delete {
   border-top-color: #fff;
   border-bottom-color: #fff;
 }
+table.table-vert-centered td {
+  vertical-align: middle;
+}
 footer {
   margin-top: 15px;
 }

@@ -90,7 +90,7 @@ class Statistics extends AbstractModifier
                 'def'  => 5,
                 'int'  => 5,
                 'mdef' => 5,
-                'acc'  => 5,
+                'dex'  => 5,
                 'eva'  => 5,
                 'meva' => 5,
                 'spd'  => 5,

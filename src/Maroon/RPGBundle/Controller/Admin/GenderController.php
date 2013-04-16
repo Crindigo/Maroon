@@ -3,32 +3,31 @@
 namespace Maroon\RPGBundle\Controller\Admin;
 
 use Maroon\RPGBundle\Controller\MaroonController;
-use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Maroon\RPGBundle\Entity\Gender;
+use Maroon\RPGBundle\Form\Type\GenderType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Maroon\RPGBundle\Entity\Race;
-use Maroon\RPGBundle\Form\Type\RaceType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Race controller.
+ * Class GenderController
  *
- * @Route("/admin/race")
+ * @package Maroon\RPGBundle\Controller\Admin
+ * @Route("/admin/gender")
  */
-class RaceController extends MaroonController
+class GenderController extends MaroonController
 {
     /**
-     * Lists all Race entities.
+     * Lists all Gender entities.
      *
-     * @Route("/", name="admin_race")
+     * @Route("/", name="admin_gender")
      * @Method("GET")
      * @Template()
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('MaroonRPGBundle:Race')->findAll();
+        $entities = $this->repo('Gender')->findAll();
 
         return array(
             'entities' => $entities,
@@ -36,24 +35,24 @@ class RaceController extends MaroonController
     }
 
     /**
-     * Creates a new Race entity.
+     * Creates a new Gender entity.
      *
-     * @Route("/", name="admin_race_create")
+     * @Route("/", name="admin_gender_create")
      * @Method("POST")
-     * @Template("MaroonRPGBundle:Admin:Race:new.html.twig")
+     * @Template("MaroonRPGBundle:Admin:Gender:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $race = new Race();
-        $form = $this->createForm(new RaceType(), $race);
+        $gender = new Gender();
+        $form = $this->createForm(new GenderType(), $gender);
         $form->bind($request);
 
         if ($form->isValid()) {
-            $this->em()->persist($race);
+            $this->em()->persist($gender);
             $this->em()->flush();
 
-            $this->flash('success', 'Race added');
-            return $this->redirect($this->generateUrl('admin_race', array('id' => $race->getId())));
+            $this->flash('success', 'Gender added');
+            return $this->redirect($this->generateUrl('admin_gender', array('id' => $gender->getId())));
         }
 
         return array(
@@ -62,9 +61,9 @@ class RaceController extends MaroonController
     }
 
     /**
-     * Displays a form to create a new Race entity.
+     * Displays a form to create a new Gender entity.
      *
-     * @Route("/new", name="admin_race_new")
+     * @Route("/new", name="admin_gender_new")
      * @Method("GET")
      * @Template()
      */
@@ -72,7 +71,7 @@ class RaceController extends MaroonController
     {
         $statKeys = array_keys($this->container->getParameter('maroon_rpg.base_stats'));
 
-        $entity = new Race();
+        $entity = new Gender();
 
         $zeros = array();
         foreach ( $statKeys as $stat ) {
@@ -81,7 +80,7 @@ class RaceController extends MaroonController
         $entity->setStatsInit($zeros);
         $entity->setStatsBonus($zeros);
 
-        $form   = $this->createForm(new RaceType(), $entity);
+        $form   = $this->createForm(new GenderType(), $entity);
 
         return array(
             'entity' => $entity,
@@ -91,9 +90,9 @@ class RaceController extends MaroonController
     }
 
     /**
-     * Displays a form to edit an existing Race entity.
+     * Displays a form to edit an existing Gender entity.
      *
-     * @Route("/{id}/edit", name="admin_race_edit")
+     * @Route("/{id}/edit", name="admin_gender_edit")
      * @Method("GET")
      * @Template()
      */
@@ -101,14 +100,14 @@ class RaceController extends MaroonController
     {
         $statKeys = array_keys($this->container->getParameter('maroon_rpg.base_stats'));
 
-        /** @var $entity Race */
-        $entity = $this->repo('Race')->find($id);
+        /** @var $entity Gender */
+        $entity = $this->repo('Gender')->find($id);
 
         if ( !$entity ) {
             throw $this->createNotFoundException('Unable to find Race entity.');
         }
 
-        $editForm = $this->createForm(new RaceType(), $entity);
+        $editForm = $this->createForm(new GenderType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -122,30 +121,30 @@ class RaceController extends MaroonController
     /**
      * Edits an existing Race entity.
      *
-     * @Route("/{id}", name="admin_race_update")
+     * @Route("/{id}", name="admin_gender_update")
      * @Method("PUT")
-     * @Template("MaroonRPGBundle:Admin:Race:edit.html.twig")
+     * @Template("MaroonRPGBundle:Admin:Gender:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('MaroonRPGBundle:Race')->find($id);
+        $entity = $this->repo('Gender')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Race entity.');
+            throw $this->createNotFoundException('Unable to find Gender entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new RaceType(), $entity);
+        $editForm = $this->createForm(new GenderType(), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
 
-            $this->flash('success', 'Race updated');
-            return $this->redirect($this->generateUrl('admin_race', array('id' => $id)));
+            $this->flash('success', 'Gender updated');
+            return $this->redirect($this->generateUrl('admin_gender', array('id' => $id)));
         }
 
         return array(
@@ -156,9 +155,9 @@ class RaceController extends MaroonController
     }
 
     /**
-     * Deletes a Race entity.
+     * Deletes a Gender entity.
      *
-     * @Route("/{id}", name="admin_race_delete")
+     * @Route("/{id}", name="admin_gender_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -168,17 +167,17 @@ class RaceController extends MaroonController
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('MaroonRPGBundle:Race')->find($id);
+            $entity = $this->repo('Gender')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Race entity.');
+                throw $this->createNotFoundException('Unable to find Gender entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('admin_race'));
+        return $this->redirect($this->generateUrl('admin_gender'));
     }
 
     /**
@@ -193,6 +192,6 @@ class RaceController extends MaroonController
         return $this->createFormBuilder(array('id' => $id))
             ->add('id', 'hidden')
             ->getForm()
-        ;
+            ;
     }
 }

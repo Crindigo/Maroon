@@ -19,13 +19,14 @@ class CharStats
         'maxsp' => 'Maxsp',
 
         'str'  => 'Strength',
-        'def'  => 'Defense',
+        'dex'  => 'Dexterity',
         'int'  => 'Intelligence',
-        'mdef' => 'MagicDefense',
 
-        'acc'  => 'Accuracy',
+        'def'  => 'Defense',
+        'mdef' => 'MagicDefense',
         'eva'  => 'Evasion',
         'meva' => 'MagicEvasion',
+
         'spd'  => 'Speed',
         'luck' => 'Luck',
     );
@@ -96,11 +97,11 @@ class CharStats
     private $magicDefense;
 
     /**
-     * @var integer $accuracy
+     * @var integer $dexterity
      *
-     * @ORM\Column(name="accuracy", type="smallint")
+     * @ORM\Column(name="dexterity", type="smallint")
      */
-    private $accuracy;
+    private $dexterity;
 
     /**
      * @var integer $evasion
@@ -346,26 +347,26 @@ class CharStats
     }
 
     /**
-     * Set accuracy
+     * Set dexterity
      *
-     * @param integer $accuracy
+     * @param integer $dexterity
      * @return CharStats
      */
-    public function setAccuracy($accuracy)
+    public function setDexterity($dexterity)
     {
-        $this->accuracy = $accuracy;
+        $this->dexterity = $dexterity;
     
         return $this;
     }
 
     /**
-     * Get accuracy
+     * Get dexterity
      *
      * @return integer 
      */
-    public function getAccuracy()
+    public function getDexterity()
     {
-        return $this->accuracy;
+        return $this->dexterity;
     }
 
     /**

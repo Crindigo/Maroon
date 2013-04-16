@@ -106,7 +106,7 @@ class Builder extends ContainerAware
         $chars->addChild('Search Characters', array('uri' => '#'));
         $this->addHeader($chars, 'Customization');
         $chars->addChild('Races', array('route' => 'admin_race'));
-        $chars->addChild('Genders', array('uri' => '#'));
+        $chars->addChild('Genders', array('route' => 'admin_gender'));
         $chars->addChild('Job Classes', array('uri' => '#'));
 
         $world = $menu->addChild('World', array('uri' => '#'));
