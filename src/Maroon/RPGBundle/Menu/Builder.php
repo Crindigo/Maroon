@@ -66,7 +66,7 @@ class Builder extends ContainerAware
             $dropdown = $menu->addChild($security->getToken()->getUsername(), array('uri' => '#'));
 
             if ( $security->isGranted('ROLE_ADMIN') ) {
-                $dropdown->addChild('Administration', array('route' => 'maroon_rpg_admin_default_index'))
+                $dropdown->addChild('Administration', array('route' => 'admin_home'))
                     ->setExtra('icon', 'wrench');
             }
             $dropdown->addChild('My Profile', array('route' => 'fos_user_profile_show'))->setExtra('icon', 'user');
@@ -85,7 +85,7 @@ class Builder extends ContainerAware
     {
         $menu = $factory->createItem('root')->setChildrenAttribute('class', 'nav');
 
-        $menu->addChild('Dashboard', array('route' => 'maroon_rpg_admin_default_index'));
+        $menu->addChild('Dashboard', array('route' => 'admin_home'));
 
         $database = $menu->addChild('Database', array('uri' => '#'));
         $this->addHeader($database, 'Items & Types');

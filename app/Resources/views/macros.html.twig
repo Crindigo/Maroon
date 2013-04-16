@@ -1,0 +1,27 @@
+{% macro breadcrumbs(links) %}
+    <ul class="breadcrumb">
+        {% for route, text in links %}
+            {% if route|length > 0 %}
+                <li>
+                    <a href="{{ path(route) }}">{{ text }}</a> {% if not loop.last %}<span class="divider">/</span>{% endif %}
+                </li>
+            {% else %}
+                <li class="active">{{ text }} {% if not loop.last %}<span class="divider">/</span>{% endif %}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endmacro %}
+
+{% macro ubreadcrumbs(links) %}
+    <ul class="breadcrumb">
+        {% for url, text in links %}
+            {% if url|length > 0 %}
+                <li>
+                    <a href="{{ url }}">{{ text }}</a> {% if not loop.last %}<span class="divider">/</span>{% endif %}
+                </li>
+            {% else %}
+                <li class="active">{{ text }} {% if not loop.last %}<span class="divider">/</span>{% endif %}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endmacro %}

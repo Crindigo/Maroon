@@ -16,6 +16,9 @@
 {% block navbar %}{% endblock %}
 
 <div class="container">
+
+    {% block crumbs %}{% endblock %}
+
     {% set _headline = block('headline') %}
     {% set _subheadline = block('sub_headline') %}
     {% if _headline is not empty %}

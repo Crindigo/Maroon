@@ -5,6 +5,7 @@ namespace Maroon\RPGBundle\Controller\Admin;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  *
@@ -12,16 +13,16 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/admin")
+     * @Route("/admin", name="admin_in")
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function redirAction()
     {
-        return $this->redirect($this->generateUrl('maroon_rpg_admin_default_index'));
+        return $this->redirect($this->generateUrl('admin_home'));
     }
 
     /**
-     * @Route("/admin/home")
+     * @Route("/admin/home", name="admin_home")
      * @Template
      */
     public function indexAction()
@@ -30,10 +31,10 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/admin/test")
+     * @Route("/admin/test", name="admin_test")
      */
     public function blahAction()
     {
-        return new \Symfony\Component\HttpFoundation\Response("Is this secure?");
+        return new Response("Is this secure?");
     }
 }

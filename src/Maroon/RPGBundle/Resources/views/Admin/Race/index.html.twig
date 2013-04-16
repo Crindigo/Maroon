@@ -1,4 +1,9 @@
 {% extends 'MaroonRPGBundle::layout_admin.html.twig' %}
+{% from '::macros.html.twig' import breadcrumbs %}
+
+{% block crumbs %}
+    {{ breadcrumbs({'admin_home': 'Admin Home', '': 'Races'}) }}
+{% endblock %}
 
 {% block headline %}Races{% endblock %}
 
