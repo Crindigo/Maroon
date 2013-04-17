@@ -124,7 +124,7 @@ class RaceController extends MaroonController
      *
      * @Route("/{id}", name="admin_race_update")
      * @Method("PUT")
-     * @Template("MaroonRPGBundle:Admin:Race:edit.html.twig")
+     * @Template("MaroonRPGBundle:Admin/Race:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {

@@ -252,4 +252,27 @@ class Race implements \JsonSerializable
     {
         return $this->statsBonus;
     }
+
+    /**
+     * Set modifiers
+     *
+     * @param array $modifiers
+     * @return Race
+     */
+    public function setModifiers($modifiers)
+    {
+        $this->modifiers = $modifiers;
+
+        return $this;
+    }
+
+    /**
+     * Get modifiers
+     *
+     * @return array
+     */
+    public function getModifiers()
+    {
+        return $this->modifiers;
+    }
 }

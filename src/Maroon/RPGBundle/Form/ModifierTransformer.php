@@ -2,6 +2,9 @@
 
 namespace Maroon\RPGBundle\Form;
 
+use Maroon\RPGBundle\Modifier\AbstractModifier;
+use Maroon\RPGBundle\Modifier\ConfigurationException;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
@@ -10,6 +13,13 @@ use Symfony\Component\Yaml\Yaml;
 
 class ModifierTransformer implements DataTransformerInterface
 {
+    private $container;
+
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
     /**
      * Transforms a value from the original representation to a transformed representation.
      *
@@ -40,26 +50,14 @@ class ModifierTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
-        // transforms a text blob containing Yaml into a structure of modifiers
-        $value = trim($value);
-        if ( empty($value) ) {
-            return ['orig' => [], 'modifiers' => []];
+        // transforms the structure of modifiers back into Yaml representation
+        if ( !isset($value['orig']) || empty($value['orig']) ) {
+            return '';
         }
 
-        try {
-            $yaml = Yaml::parse($value);
-        } catch ( ParseException $e ) {
-            throw new TransformationFailedException('Could not parse Yaml: ' . $e->getMessage());
-        }
-
-        // $yaml = ['Modifier.Name' => ['key' => 'val', 'k2' => 'val2']]
-        $mods = ['orig' => $yaml, 'modifiers' => []];
-
-        foreach ( $yaml as $modifier => $config ) {
-            $mods['modifiers'][$modifier] = $config; // obviously to do. get full class, validate config.
-        }
-
-        return $mods;
+        // add an extra newline between top-level objects
+        $yaml = Yaml::dump($value['orig'], 2, 2);
+        return preg_replace('/(\r?\n)([A-Z])/', "$1$1$2", $yaml);
     }
 
     /**
@@ -89,12 +87,40 @@ class ModifierTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        // transforms the structure of modifiers back into Yaml representation
-        if ( !isset($value['orig']) || empty($value['orig']) ) {
-            return '';
+        // transforms a text blob containing Yaml into a structure of modifiers
+        $value = trim($value);
+        if ( empty($value) ) {
+            return ['orig' => [], 'modifiers' => []];
         }
 
-        return Yaml::dump($value['orig']);
+        try {
+            $yaml = Yaml::parse($value);
+        } catch ( ParseException $e ) {
+            throw new TransformationFailedException('Could not parse Yaml: ' . $e->getMessage());
+        }
+
+        // $yaml = ['Modifier.Name' => ['key' => 'val', 'k2' => 'val2']]
+        $mods = ['orig' => $yaml, 'modifiers' => []];
+
+        foreach ( $yaml as $modifierName => $config ) {
+            $modifierClassName = '\Maroon\RPGBundle\Modifier\\' . str_replace('.', '\\', $modifierName);
+            if ( !class_exists($modifierClassName) ) {
+                continue;
+            }
+
+            /** @var $modifier AbstractModifier */
+            $modifier = new $modifierClassName();
+            if ( is_subclass_of($modifier, '\Maroon\RPGBundle\Modifier\AbstractModifier') ) {
+                try {
+                    $mods['modifiers'][$modifierClassName] = $modifier->validateConfiguration($config, $this->container);
+                } catch ( ConfigurationException $e ) {
+                    // ignore them here, we'll report it in the validator
+                    continue;
+                }
+            }
+        }
+
+        return $mods;
     }
 
 }

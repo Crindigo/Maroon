@@ -23,6 +23,16 @@
         <service id="maroon.twig.maroon_extension" class="Maroon\RPGBundle\Twig\MaroonExtension">
             <tag name="twig.extension" />
         </service>
+
+        <service id="maroon_rpg.form.type.modifier" class="Maroon\RPGBundle\Form\Type\ModifierType">
+            <tag name="form.type" alias="modifier" />
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="maroon_rpg.validator.modifier" class="Maroon\RPGBundle\Validator\Constraints\ModifierValidator">
+            <argument type="service" id="service_container" />
+            <tag name="validator.constraint_validator" alias="modifier" />
+        </service>
     </services>
     <!--
     <parameters>

@@ -1,6 +1,33 @@
 {% extends 'MaroonRPGBundle::layout_admin.html.twig' %}
 {% from '::macros.html.twig' import breadcrumbs %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets '@MaroonRPGBundle/Resources/public/css/codemirror.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts '@MaroonRPGBundle/Resources/public/js/codemirror.js'
+    '@MaroonRPGBundle/Resources/public/js/cm_yaml.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script>
+        $(function() {
+            var $m = $('#maroon_rpgbundle_racetype_modifiers');
+            var modifierEditor = CodeMirror.fromTextArea($m[0], {
+                mode: 'yaml',
+                extraKeys: {
+                    Tab: function(cm) { cm.replaceSelection("  ", "end"); }
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
 {% block crumbs %}
     {{ breadcrumbs({'admin_home': 'Admin Home', 'admin_race': 'Races', '': 'New Race'}) }}
 {% endblock %}

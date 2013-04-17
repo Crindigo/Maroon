@@ -30,6 +30,7 @@ class RaceType extends AbstractType
             ))
             ->add('statsInit', new StatsType())
             ->add('statsBonus', new StatsType())
+            ->add('modifiers', 'modifier')
         ;
     }
 

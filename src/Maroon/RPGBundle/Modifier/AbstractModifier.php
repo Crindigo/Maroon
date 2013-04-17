@@ -166,8 +166,8 @@ abstract class AbstractModifier
                     }
                     $min = $type == 'integer' ? intval($min) : floatval($min);
                     $max = $type == 'integer' ? intval($max) : floatval($max);
-                    if ( $max > $min ) {
-                        throw new ConfigurationException($key, 'Range min is lower than max');
+                    if ( $min > $max ) {
+                        throw new ConfigurationException($key, 'Range max is lower than min');
                     }
                     $config[$key] = $this->clampRange($config[$key], $min, $max);
                 }
