@@ -16,6 +16,7 @@ class Version20130417023607 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() != "mysql");
         
         $this->addSql("ALTER TABLE rpg_races ADD modifiers LONGTEXT NOT NULL COMMENT '(DC2Type:array)'");
+        $this->addSql("UPDATE rpg_races SET modifiers = 'a:0:{}'"); // default to empty array
     }
 
     public function down(Schema $schema)
