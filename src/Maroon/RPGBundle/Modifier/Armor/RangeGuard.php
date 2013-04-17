@@ -78,9 +78,9 @@ DESC;
     }
 
 
-    public function getConfigSpec()
+    public function getConfigSpec(ContainerInterface $container)
     {
-        $spec = parent::getConfigSpec();
+        $spec = parent::getConfigSpec($container);
         $spec['magical']  = ['boolean', 'default' => false];
         $spec['physical'] = ['boolean', 'default' => false];
         $spec['damageReduction'] = ['number', 'default' => 0, 'range' => '0:100'];
@@ -127,9 +127,7 @@ DESC;
      */
     public function getEvents()
     {
-        return [
-            'item' => ['receiveAttack'],
-        ];
+        return ['receiveAttack'];
     }
 
     /**

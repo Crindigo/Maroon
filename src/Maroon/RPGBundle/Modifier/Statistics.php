@@ -34,7 +34,7 @@ class Statistics extends AbstractModifier
 
     }
 
-    public function onRebuildStats(Item $item, Character $character)
+    public function onRebuildStats(Character $character)
     {
         // when stats are being rebuilt, the character's stats are reset to base and then built again
         // so we can adjust the stats here in the event.
@@ -60,9 +60,7 @@ class Statistics extends AbstractModifier
 
     public function getEvents()
     {
-        return [
-            'item' => ['equip', 'unequip', 'rebuildStats'],
-        ];
+        return ['equip', 'unequip', 'rebuildStats'];
     }
 
     public function getDescription()
@@ -70,9 +68,9 @@ class Statistics extends AbstractModifier
         return 'Modifies statistics for equippable items and maybe mobs.';
     }
 
-    public function getConfigSpec()
+    public function getConfigSpec(ContainerInterface $container)
     {
-        $spec = parent::getConfigSpec();
+        $spec = parent::getConfigSpec($container);
         foreach ( CharStats::$statAliases as $stat => $full ) {
             $spec[$stat] = ['integer', 'default' => 0, 'range' => '-1000:1000'];
             $spec['pct_' . $stat] = ['integer', 'default' => 100, 'range' => '0:200']; // percentages, maybe

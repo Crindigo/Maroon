@@ -51,6 +51,13 @@ class Race implements \JsonSerializable
     private $statsBonus;
 
     /**
+     * @var array $modifiers
+     *
+     * @ORM\Column(name="modifiers", type="array")
+     */
+    private $modifiers;
+
+    /**
      * @var ArrayCollection $selectableGenders
      *
      * @ORM\ManyToMany(targetEntity="Gender")
@@ -76,6 +83,7 @@ class Race implements \JsonSerializable
     {
         $this->statsInit = array();
         $this->statsBonus = array();
+        $this->modifiers = array();
         $this->selectableGenders = new ArrayCollection();
         $this->selectableJobs = new ArrayCollection();
     }

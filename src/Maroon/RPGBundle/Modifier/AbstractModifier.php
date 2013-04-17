@@ -78,9 +78,10 @@ abstract class AbstractModifier
      *   'key'    => ['type', 'default' => '']
      *   'numkey' => ['number', 'default' => 2, 'range' => '1-3']
      * ]
+     * @param ContainerInterface $container
      * @return array
      */
-    public function getConfigSpec()
+    public function getConfigSpec(ContainerInterface $container)
     {
         return array();
     }
@@ -122,7 +123,7 @@ abstract class AbstractModifier
      */
     public function validateConfiguration(array $config, ContainerInterface $container)
     {
-        $spec = $this->getConfigSpec();
+        $spec = $this->getConfigSpec($container);
 
         foreach ( $spec as $key => $params ) {
             if ( !is_array($params) ) {
@@ -186,8 +187,11 @@ abstract class AbstractModifier
         return array_intersect_key($config, $spec);
     }
 
-    protected function clampRange($num, $min, $max)
+    protected function clampRange($num, $min, $max = null)
     {
+        if ( is_string($min) && $max === null ) {
+            list($min, $max) = explode(':', $min);
+        }
         return min($max, max($min, $num));
     }
 }
