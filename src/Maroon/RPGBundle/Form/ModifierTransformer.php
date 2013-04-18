@@ -103,8 +103,13 @@ class ModifierTransformer implements DataTransformerInterface
         $mods = ['orig' => $yaml, 'modifiers' => []];
 
         foreach ( $yaml as $modifierName => $config ) {
+            // !strpos is appropriate, we want to reject . as the first character
+            if ( !strpos($modifierName, '.') ) {
+                continue;
+            }
+
             $modifierClassName = '\Maroon\RPGBundle\Modifier\\' . str_replace('.', '\\', $modifierName);
-            if ( !class_exists($modifierClassName) || strpos($modifierName, '.') === false ) {
+            if ( !class_exists($modifierClassName) ) {
                 continue;
             }
 

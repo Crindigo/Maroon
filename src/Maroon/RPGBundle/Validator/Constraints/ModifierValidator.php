@@ -20,10 +20,18 @@ class ModifierValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         foreach ( $value['orig'] as $modifierName => $config ) {
+            // !strpos is appropriate, we want to reject . as the first character
+            if ( !strpos($modifierName, '.') ) {
+                $this->context->addViolation($constraint->message,
+                    ['%errors%' => "Modifier '$modifierName' does not exist"]);
+                continue;
+            }
+
             $modifierClassName = '\Maroon\RPGBundle\Modifier\\' . str_replace('.', '\\', $modifierName);
-            // check if this modifier does not exist, or if it has no period (modifiers are only in subfolders)
-            if ( !class_exists($modifierClassName) || strpos($modifierName, '.') === false ) {
-                $this->context->addViolation($constraint->message, array('%errors%' => "Modifier '$modifierName' does not exist"));
+            // check if this modifier does not exist
+            if ( !class_exists($modifierClassName) ) {
+                $this->context->addViolation($constraint->message,
+                    ['%errors%' => "Modifier '$modifierName' does not exist"]);
                 continue;
             }
 
