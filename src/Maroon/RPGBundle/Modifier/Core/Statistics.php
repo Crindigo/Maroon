@@ -70,7 +70,7 @@ class Statistics extends AbstractModifier
 Modifies statistics for equippable items and maybe mobs.
 Properties:
 - maxhp, maxmp, str, dex, int, def, mdef, eva, meva, spd, luck (int): raises stat by number
-- the above, with _pct appended, so maxhp_pct, etc. (number): raises stat by percentage
+- the above, with pct_ prepended, so pct_maxhp, etc. (number): raises stat by percentage
 DESC;
     }
 
