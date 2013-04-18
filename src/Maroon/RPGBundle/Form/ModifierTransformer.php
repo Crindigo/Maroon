@@ -104,7 +104,7 @@ class ModifierTransformer implements DataTransformerInterface
 
         foreach ( $yaml as $modifierName => $config ) {
             $modifierClassName = '\Maroon\RPGBundle\Modifier\\' . str_replace('.', '\\', $modifierName);
-            if ( !class_exists($modifierClassName) ) {
+            if ( !class_exists($modifierClassName) || strpos($modifierName, '.') === false ) {
                 continue;
             }
 

@@ -40,7 +40,7 @@ class RaceController extends MaroonController
      *
      * @Route("/", name="admin_race_create")
      * @Method("POST")
-     * @Template("MaroonRPGBundle:Admin:Race:new.html.twig")
+     * @Template("MaroonRPGBundle:Admin/Race:new.html.twig")
      */
     public function createAction(Request $request)
     {

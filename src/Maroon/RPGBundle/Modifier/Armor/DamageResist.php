@@ -68,7 +68,15 @@ class DamageResist extends AbstractModifier
 
     public function getDescription()
     {
-        return 'Reduces damage of specific types by given percentages.';
+        return <<<'DESC'
+Reduces damage of specific types by given percentages. Negative numbers increase damage.
+Numbers above 100 will absorb the damage type by (number - 100) percent.
+Properties:
+- all (number): reduces damage from all damage types
+- allPhysical (number): reduces damage from physical types (physical, blunt, slash, pierce)
+- allMagical (number): reduces damage from magical types (magic, fire, ice, water, electric, earth, wind, holy, shadow, gravity)
+- you can also specify individual types listed in the last two
+DESC;
     }
 
     public function getConfigSpec(ContainerInterface $container)

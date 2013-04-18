@@ -2,6 +2,7 @@
 
 namespace Maroon\RPGBundle\Controller\Admin;
 
+use Maroon\RPGBundle\Modifier\ModifierCollector;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -36,5 +37,17 @@ class DefaultController extends Controller
     public function blahAction()
     {
         return new Response("Is this secure?");
+    }
+
+    /**
+     * @Route("/admin/modifier-ref", name="admin_modifier_ref")
+     * @Template
+     */
+    public function modifierRefAction()
+    {
+        $collector = new ModifierCollector();
+        $allMods = $collector->collectAll();
+
+        return ['mods' => $allMods];
     }
 }

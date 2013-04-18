@@ -39,7 +39,7 @@ class GenderController extends MaroonController
      *
      * @Route("/", name="admin_gender_create")
      * @Method("POST")
-     * @Template("MaroonRPGBundle:Admin:Gender:new.html.twig")
+     * @Template("MaroonRPGBundle:Admin/Gender:new.html.twig")
      */
     public function createAction(Request $request)
     {
@@ -119,11 +119,11 @@ class GenderController extends MaroonController
     }
 
     /**
-     * Edits an existing Race entity.
+     * Edits an existing Gender entity.
      *
      * @Route("/{id}", name="admin_gender_update")
      * @Method("PUT")
-     * @Template("MaroonRPGBundle:Admin:Gender:edit.html.twig")
+     * @Template("MaroonRPGBundle:Admin/Gender:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
@@ -181,7 +181,7 @@ class GenderController extends MaroonController
     }
 
     /**
-     * Creates a form to delete a Race entity by id.
+     * Creates a form to delete a Gender entity by id.
      *
      * @param mixed $id The entity id
      *

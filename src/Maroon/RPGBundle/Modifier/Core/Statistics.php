@@ -1,10 +1,11 @@
 <?php
 
-namespace Maroon\RPGBundle\Modifier;
+namespace Maroon\RPGBundle\Modifier\Core;
 
 use Maroon\RPGBundle\Entity\CharStats;
 use Maroon\RPGBundle\Model\Character;
 use Maroon\RPGBundle\Model\Item;
+use Maroon\RPGBundle\Modifier\AbstractModifier;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 // $item->runModifiers('equip', $character)
@@ -14,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Modifies statistics of an item.
  *
- * Statistics:
+ * Std.Statistics:
  *   str: 10
  *   def: 5
  *
@@ -42,7 +43,7 @@ class Statistics extends AbstractModifier
         foreach ( $this->config as $stat => $value ) {
             if ( strpos($stat, 'pct_') === 0 ) {
                 $stat = substr($stat, 4);
-                $value = $value * $character->getBaseStat($stat) / 100;
+                $value = $character->getBaseStat($stat) * $value / 100;
             }
             $character->adjustStat($stat, $value);
         }
@@ -50,7 +51,7 @@ class Statistics extends AbstractModifier
 
     public function getName()
     {
-        return 'Statistics';
+        return 'Core.Statistics';
     }
 
     public function getApplicableTypes()
@@ -65,7 +66,12 @@ class Statistics extends AbstractModifier
 
     public function getDescription()
     {
-        return 'Modifies statistics for equippable items and maybe mobs.';
+        return <<<'DESC'
+Modifies statistics for equippable items and maybe mobs.
+Properties:
+- maxhp, maxmp, str, dex, int, def, mdef, eva, meva, spd, luck (int): raises stat by number
+- the above, with _pct appended, so maxhp_pct, etc. (number): raises stat by percentage
+DESC;
     }
 
     public function getConfigSpec(ContainerInterface $container)
@@ -73,7 +79,7 @@ class Statistics extends AbstractModifier
         $spec = parent::getConfigSpec($container);
         foreach ( CharStats::$statAliases as $stat => $full ) {
             $spec[$stat] = ['integer', 'default' => 0, 'range' => '-1000:1000'];
-            $spec['pct_' . $stat] = ['integer', 'default' => 100, 'range' => '0:200']; // percentages, maybe
+            $spec['pct_' . $stat] = ['integer', 'default' => 0, 'range' => '-100:100']; // percentages, maybe
         }
         return $spec;
     }
@@ -85,10 +91,10 @@ class Statistics extends AbstractModifier
                 'maxhp' => 20,
                 'maxsp' => 10,
                 'str'  => 5,
-                'def'  => 5,
-                'int'  => 5,
-                'mdef' => 5,
                 'dex'  => 5,
+                'int'  => 5,
+                'def' => 5,
+                'mdef'  => 5,
                 'eva'  => 5,
                 'meva' => 5,
                 'spd'  => 5,
@@ -97,7 +103,7 @@ class Statistics extends AbstractModifier
         ];
     }
 
-    public function mergeConfiguration(Statistics $other)
+    public function mergeConfiguration(AbstractModifier $other)
     {
         foreach ( $other->config as $stat => $value ) {
             $this->config[$stat] += $value;

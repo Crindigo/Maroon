@@ -10,8 +10,6 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class ModifierValidator extends ConstraintValidator
 {
-    private static $blacklist = ['AbstractModifier', 'ConfigurationException', 'ModifierTrait'];
-
     private $container;
 
     public function __construct(ContainerInterface $container)
@@ -23,8 +21,8 @@ class ModifierValidator extends ConstraintValidator
     {
         foreach ( $value['orig'] as $modifierName => $config ) {
             $modifierClassName = '\Maroon\RPGBundle\Modifier\\' . str_replace('.', '\\', $modifierName);
-            // check if this modifier does not exist
-            if ( !class_exists($modifierClassName) || in_array($modifierName, self::$blacklist) ) {
+            // check if this modifier does not exist, or if it has no period (modifiers are only in subfolders)
+            if ( !class_exists($modifierClassName) || strpos($modifierName, '.') === false ) {
                 $this->context->addViolation($constraint->message, array('%errors%' => "Modifier '$modifierName' does not exist"));
                 continue;
             }

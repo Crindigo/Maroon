@@ -1,0 +1,17 @@
+{% extends 'MaroonRPGBundle::layout_admin.html.twig' %}
+
+{% block headline %}Modifier Reference{% endblock %}
+
+{% block body %}
+
+    {% for catName, modifiers in mods %}
+        <h2>{{ catName }}</h2>
+        {% for mod in modifiers %}
+            <div class="modref-block well">
+                <h3>{{ mod.name }}</h3>
+                <p>{{ mod.description|nl2br }}</p>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+{% endblock %}

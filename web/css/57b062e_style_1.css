@@ -5421,6 +5421,17 @@ form.form-delete {
 table.table-vert-centered td {
   vertical-align: middle;
 }
+div.modref-block {
+  padding: 10px;
+  margin: 10px 0;
+}
+div.modref-block h3 {
+  margin-top: 0;
+  line-height: 30px;
+}
+div.modref-block p {
+  margin-bottom: 0;
+}
 footer {
   margin-top: 15px;
 }

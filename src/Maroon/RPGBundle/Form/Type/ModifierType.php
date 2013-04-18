@@ -17,6 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class ModifierType extends AbstractType
 {
@@ -35,6 +36,8 @@ class ModifierType extends AbstractType
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
+        $url = $this->container->get('router')->generate('admin_modifier_ref', [], UrlGeneratorInterface::ABSOLUTE_PATH);
+
         $resolver->setDefaults(array(
             'attr' => array(
                 'class' => 'span6',
@@ -42,6 +45,8 @@ class ModifierType extends AbstractType
             ),
             'required' => false,
             'constraints' => new Modifier(),
+            'label' => 'Modifiers',
+            'help_block' => '<a class="btn btn-small" style="margin-top: 4px;" href="' . $url . '" target="_blank"><i class="icon-book"></i> Modifier Reference</a>',
         ));
     }
 
