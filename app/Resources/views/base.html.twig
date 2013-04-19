@@ -29,7 +29,7 @@
 
     {% block flashes %}
         {% if app.session.flashbag.peekAll|length > 0 %}
-            <div class="row-fluid">
+            <div class="row">
                 <div class="span12">
                     {{ session_flash(true, true) }}
                 </div>

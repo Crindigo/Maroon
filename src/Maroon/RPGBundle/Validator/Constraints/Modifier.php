@@ -12,6 +12,12 @@ use Symfony\Component\Validator\Constraint;
 class Modifier extends Constraint
 {
     public $message = 'The modifier configuration has a problem: %errors%';
+    public $modifierType;
+
+    public function __construct(array $type)
+    {
+        $this->modifierType = $type['value'];
+    }
 
     public function validatedBy()
     {

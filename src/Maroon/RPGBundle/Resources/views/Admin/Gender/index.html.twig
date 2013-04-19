@@ -1,6 +1,8 @@
 {% extends 'MaroonRPGBundle::layout_admin.html.twig' %}
 {% from '::macros.html.twig' import breadcrumbs %}
 
+{% block title %}Genders | {{ parent() }}{% endblock %}
+
 {% block crumbs %}
 {{ breadcrumbs({'admin_home': 'Admin Home', '': 'Genders'}) }}
 {% endblock %}

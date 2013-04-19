@@ -1,6 +1,8 @@
 {% extends 'MaroonRPGBundle::layout_admin.html.twig' %}
 {% from '::macros.html.twig' import breadcrumbs %}
 
+{% block title %}New Race | {{ parent() }}{% endblock %}
+
 {% block stylesheets %}
     {{ parent() }}
     {% stylesheets '@MaroonRPGBundle/Resources/public/css/codemirror.css' %}

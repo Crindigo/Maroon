@@ -44,7 +44,7 @@ class ModifierType extends AbstractType
                 'rows' => 10,
             ),
             'required' => false,
-            'constraints' => new Modifier(),
+//            'constraints' => new Modifier(),
             'label' => 'Modifiers',
             'help_block' => '<a class="btn btn-small" style="margin-top: 4px;" href="' . $url . '" target="_blank"><i class="icon-book"></i> Modifier Reference</a>',
         ));

@@ -116,7 +116,7 @@ DESC;
      */
     public function getApplicableTypes()
     {
-        return ['item'];
+        return ['item', 'race'];
     }
 
     /**

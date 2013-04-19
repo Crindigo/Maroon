@@ -37,6 +37,11 @@ class ModifierValidator extends ConstraintValidator
 
             /** @var $modifier AbstractModifier */
             $modifier = new $modifierClassName();
+            if ( !in_array($constraint->modifierType, $modifier->getApplicableTypes()) ) {
+                $this->context->addViolation($constraint->message, [
+                    '%errors%' => "$modifierName cannot be applied to {$constraint->modifierType} types",
+                ]);
+            }
             try {
                 $modifier->validateConfiguration($config, $this->container);
             } catch ( ConfigurationException $e ) {

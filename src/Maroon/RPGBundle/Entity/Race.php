@@ -4,6 +4,7 @@ namespace Maroon\RPGBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Maroon\RPGBundle\Validator\Constraints as MaroonAssert;
 
 /**
  * Maroon\RPGBundle\Entity\Race
@@ -54,6 +55,7 @@ class Race implements \JsonSerializable
      * @var array $modifiers
      *
      * @ORM\Column(name="modifiers", type="array")
+     * @MaroonAssert\Modifier("race")
      */
     private $modifiers;
 
