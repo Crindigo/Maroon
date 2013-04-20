@@ -1,8 +1,6 @@
 {% extends 'MaroonRPGBundle::layout_admin.html.twig' %}
 {% from '::macros.html.twig' import breadcrumbs %}
 
-{% block title %}New Race | {{ parent() }}{% endblock %}
-
 {% block stylesheets %}
     {{ parent() }}
     {% stylesheets '@MaroonRPGBundle/Resources/public/css/codemirror.css' %}
@@ -19,7 +17,7 @@
 
     <script>
         $(function() {
-            var $m = $('#maroon_rpgbundle_racetype_modifiers');
+            var $m = $('#maroon_rpgbundle_jobtype_modifiers');
             var modifierEditor = CodeMirror.fromTextArea($m[0], {
                 mode: 'yaml',
                 extraKeys: {
@@ -30,18 +28,18 @@
     </script>
 {% endblock %}
 
+{% block title %}New Job | {{ parent() }}{% endblock %}
+
 {% block crumbs %}
-    {{ breadcrumbs({'admin_home': 'Admin Home', 'admin_race': 'Races', '': 'New Race'}) }}
+    {{ breadcrumbs({'admin_home': 'Admin Home', 'admin_job': 'Jobs', '': 'New Job'}) }}
 {% endblock %}
 
-{% block headline %}New Race<span id="race_name"></span>{% endblock %}
+{% block headline %}New Job<span id="job_name"></span>{% endblock %}
 
 {% block body -%}
-    <form class="form-horizontal" action="{{ path('admin_race_new') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_row(form.name, {'attr': {'data-bind': '#race_name', 'data-bindprefix': ': '}}) }}
+    <form class="form-horizontal" action="{{ path('admin_job_new') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_row(form.name, {'attr': {'data-bind': '#job_name', 'data-bindprefix': ': '}}) }}
         {{ form_row(form.description, {'attr': {'class': 'span6'}}) }}
-        {{ form_row(form.selectableGenders) }}
-        {{ form_row(form.selectableJobs) }}
 
         <div class="control-group">
             <label class="control-label">Initial Stats</label>
@@ -112,7 +110,7 @@
         {{ form_rest(form) }}
         <div class="form-actions">
             <button class="btn btn-primary" type="submit">Create</button>
-            <a href="{{ path('admin_race') }}" class="btn btn-inverse pull-right">Back to List</a>
+            <a href="{{ path('admin_job') }}" class="btn btn-inverse pull-right">Back to List</a>
         </div>
     </form>
 

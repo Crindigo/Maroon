@@ -23,7 +23,7 @@ class GenderController extends MaroonController
      *
      * @Route("/", name="admin_gender")
      * @Method("GET")
-     * @Template()
+     * @Template
      */
     public function indexAction()
     {
@@ -35,57 +35,42 @@ class GenderController extends MaroonController
     }
 
     /**
-     * Creates a new Gender entity.
-     *
-     * @Route("/", name="admin_gender_create")
-     * @Method("POST")
-     * @Template("MaroonRPGBundle:Admin/Gender:new.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        $gender = new Gender();
-        $form = $this->createForm(new GenderType(), $gender);
-        $form->bind($request);
-
-        if ($form->isValid()) {
-            $this->em()->persist($gender);
-            $this->em()->flush();
-
-            $this->flash('success', 'Gender added');
-            return $this->redirect($this->generateUrl('admin_gender', array('id' => $gender->getId())));
-        }
-
-        return array(
-            'form' => $form->createView(),
-        );
-    }
-
-    /**
      * Displays a form to create a new Gender entity.
      *
      * @Route("/new", name="admin_gender_new")
-     * @Method("GET")
-     * @Template()
+     * @Template
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
         $statKeys = array_keys($this->container->getParameter('maroon_rpg.base_stats'));
 
         $entity = new Gender();
 
-        $zeros = array();
-        foreach ( $statKeys as $stat ) {
-            $zeros[$stat] = 0;
+        if ( $request->isMethod('GET') ) {
+            $zeros = array();
+            foreach ( $statKeys as $stat ) {
+                $zeros[$stat] = 0;
+            }
+            $entity->setStatsInit($zeros);
+            $entity->setStatsBonus($zeros);
         }
-        $entity->setStatsInit($zeros);
-        $entity->setStatsBonus($zeros);
 
-        $form   = $this->createForm(new GenderType(), $entity);
+        $form = $this->createForm(new GenderType(), $entity);
+
+        if ( $request->isMethod('POST') ) {
+            $form->bind($request);
+            if ( $form->isValid() ) {
+                $this->em()->persist($entity);
+                $this->em()->flush();
+
+                $this->flash('success', 'Gender added');
+                return $this->redirect($this->generateUrl('admin_gender', ['id' => $entity->getId()]));
+            }
+        }
 
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
-            'stats'  => $statKeys,
         );
     }
 
@@ -93,58 +78,30 @@ class GenderController extends MaroonController
      * Displays a form to edit an existing Gender entity.
      *
      * @Route("/{id}/edit", name="admin_gender_edit")
-     * @Method("GET")
-     * @Template()
+     * @Template
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
-        $statKeys = array_keys($this->container->getParameter('maroon_rpg.base_stats'));
-
         /** @var $entity Gender */
         $entity = $this->repo('Gender')->find($id);
 
         if ( !$entity ) {
-            throw $this->createNotFoundException('Unable to find Race entity.');
-        }
-
-        $editForm = $this->createForm(new GenderType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'stats'       => $statKeys,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-     * Edits an existing Gender entity.
-     *
-     * @Route("/{id}", name="admin_gender_update")
-     * @Method("PUT")
-     * @Template("MaroonRPGBundle:Admin/Gender:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $this->repo('Gender')->find($id);
-
-        if (!$entity) {
             throw $this->createNotFoundException('Unable to find Gender entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new GenderType(), $entity);
-        $editForm->bind($request);
+        $deleteForm = $this->createDeleteForm($id);
 
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
+        if ( $request->isMethod('POST') ) {
+            $editForm->bind($request);
 
-            $this->flash('success', 'Gender updated');
-            return $this->redirect($this->generateUrl('admin_gender', array('id' => $id)));
+            if ( $editForm->isValid() ) {
+                $this->em()->persist($entity);
+                $this->em()->flush();
+
+                $this->flash('success', 'Gender updated');
+                return $this->redirect($this->generateUrl('admin_gender', ['id' => $id]));
+            }
         }
 
         return array(

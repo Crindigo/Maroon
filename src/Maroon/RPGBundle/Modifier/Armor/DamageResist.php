@@ -42,7 +42,7 @@ class DamageResist extends AbstractModifier
      */
     public function getApplicableTypes()
     {
-        return ['item', 'race'];
+        return ['item', 'race', 'job'];
     }
 
     /**

@@ -30,6 +30,32 @@ $(function() {
     });
 });
 
+Maroon.stat = function(s, c)
+{
+    if ( c == 0 ) {
+        return s;
+    }
+    
+    var bonus, dec;
+    for ( var i = 2; i <= 100; i++ ) {
+        bonus = c * Math.log(c * (i - 1));
+        dec = bonus - Math.floor(bonus);
+        s += (Math.random() < dec) ? Math.ceil(bonus) : Math.floor(bonus);
+    }
+    return s;
+};
+
+Maroon.statTest = function(iters)
+{
+    var min = 2000, max = 0, v;
+    for ( var i = 0; i < iters; i++ ) {
+        v = Maroon.stat(10, 2.253);
+        if ( v > max ) max = v;
+        if ( v < min ) min = v;
+    }
+    console.log('min: ' + min + ' max: ' + max);
+};
+
 Maroon.toCollection = function(list, type) {
     return _.map(list, function(v) { return new type(v); });
 };

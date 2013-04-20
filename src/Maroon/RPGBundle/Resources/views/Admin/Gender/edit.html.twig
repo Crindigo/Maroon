@@ -11,8 +11,7 @@
 
 {% block body -%}
 
-    <form class="form-horizontal" action="{{ path('admin_gender_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-        <input type="hidden" name="_method" value="PUT"/>
+    <form class="form-horizontal" action="{{ path('admin_gender_edit', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         {{ form_row(edit_form.name, {'attr': {'data-bind': '#gender_name'}}) }}
         {{ form_row(edit_form.description, {'attr': {'class': 'span6'}}) }}
 
@@ -91,7 +90,7 @@
 
     <div class="alert alert-danger centered">
         <form class="form-delete" action="{{ path('admin_gender_delete', { 'id': entity.id }) }}" method="post">
-            <input type="hidden" name="_method" value="DELETE"/>
+            <input type="hidden" name="_method" value="DELETE">
             {{ form_widget(delete_form) }}
             <button class="btn btn-danger" type="submit"><i class="icon-remove icon-white"></i> Delete Gender</button>
         </form>

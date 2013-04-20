@@ -59,6 +59,20 @@ class Configuration implements ConfigurationInterface
                         ->integerNode('luck')->defaultValue(10)->end()
                     ->end()
                 ->end()
+                ->arrayNode('base_coeff')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->floatNode('hp')->defaultValue(8.494766)->end()
+                        ->floatNode('sp')->defaultValue(1.236383)->end()
+                        ->floatNode('str')->defaultValue(2.252439)->end()
+                        ->floatNode('def')->defaultValue(2.252439)->end()
+                        ->floatNode('int')->defaultValue(2.252439)->end()
+                        ->floatNode('mdef')->defaultValue(2.252439)->end()
+                        ->floatNode('dex')->defaultValue(2.252439)->end()
+                        ->floatNode('eva')->defaultValue(0)->end()
+                        ->floatNode('meva')->defaultValue(0)->end()
+                        ->floatNode('spd')->defaultValue(2.252439)->end()
+                        ->floatNode('luck')->defaultValue(2.252439)->end()
             ->end();
 
 

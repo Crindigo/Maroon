@@ -63,6 +63,8 @@
         var jobChoices = {{ jobChoices|raw }};
         var baseStats = {{ baseStats|raw }};
 
+        var renderPercents = ['eva', 'meva'];
+
         var $race = $('#maroon_rpg_new_character_race');
         var $gender = $('#maroon_rpg_new_character_gender');
         var $job = $('#maroon_rpg_new_character_job');
@@ -83,7 +85,7 @@
                 if ( curGender ) { value += curGender.statsInit[stat] || 0; }
                 if ( curJob )    { value += curJob.statsInit[stat] || 0; }
 
-                $('#init-' + stat).text(value);
+                $('#init-' + stat).text(_.indexOf(renderPercents, stat) >= 0 ? (value / 100) + "%" : value);
             });
         };
         rebuildStats();

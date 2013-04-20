@@ -1,13 +1,17 @@
 maroon_rpg:
     base_stats:
-        hp: 100
-        sp: 40
+        hp: 150
+        sp: 30
         str: 10
         def: 10
         int: 10
         mdef: 10
         dex: 10
-        eva: 10
-        meva: 10
+        eva: 0
+        meva: 0
         spd: 10
         luck: 10
+
+    attack_types:
+        physical: [physical, blunt, pierce, slash]
+        magical: [magic, fire, ice, electric, water, earth, wind, holy, shadow, gravity]

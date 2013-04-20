@@ -3,6 +3,7 @@
 namespace Maroon\RPGBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Maroon\RPGBundle\Validator\Constraints as MaroonAssert;
 
 /**
  * Maroon\RPGBundle\Entity\Job
@@ -62,6 +63,14 @@ class Job implements \JsonSerializable
      * @ORM\Column(name="statsBonus", type="array")
      */
     private $statsBonus;
+
+    /**
+     * @var array $modifiers
+     *
+     * @ORM\Column(name="modifiers", type="array")
+     * @MaroonAssert\Modifier("job")
+     */
+    private $modifiers;
 
     public function __construct()
     {
@@ -227,5 +236,28 @@ class Job implements \JsonSerializable
     public function getStatsBonus()
     {
         return $this->statsBonus;
+    }
+
+    /*
+    * Set modifiers
+    *
+    * @param array $modifiers
+    * @return Race
+    */
+    public function setModifiers($modifiers)
+    {
+        $this->modifiers = $modifiers;
+
+        return $this;
+    }
+
+    /**
+     * Get modifiers
+     *
+     * @return array
+     */
+    public function getModifiers()
+    {
+        return $this->modifiers;
     }
 }

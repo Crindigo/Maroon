@@ -36,57 +36,42 @@ class RaceController extends MaroonController
     }
 
     /**
-     * Creates a new Race entity.
-     *
-     * @Route("/", name="admin_race_create")
-     * @Method("POST")
-     * @Template("MaroonRPGBundle:Admin/Race:new.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        $race = new Race();
-        $form = $this->createForm(new RaceType(), $race);
-        $form->bind($request);
-
-        if ($form->isValid()) {
-            $this->em()->persist($race);
-            $this->em()->flush();
-
-            $this->flash('success', 'Race added');
-            return $this->redirect($this->generateUrl('admin_race', array('id' => $race->getId())));
-        }
-
-        return array(
-            'form' => $form->createView(),
-        );
-    }
-
-    /**
      * Displays a form to create a new Race entity.
      *
      * @Route("/new", name="admin_race_new")
-     * @Method("GET")
-     * @Template()
+     * @Template
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
         $statKeys = array_keys($this->container->getParameter('maroon_rpg.base_stats'));
 
         $entity = new Race();
-
-        $zeros = array();
-        foreach ( $statKeys as $stat ) {
-            $zeros[$stat] = 0;
+        if ( $request->isMethod('GET') ) {
+            $zeros = array();
+            foreach ( $statKeys as $stat ) {
+                $zeros[$stat] = 0;
+            }
+            $entity->setStatsInit($zeros);
+            $entity->setStatsBonus($zeros);
         }
-        $entity->setStatsInit($zeros);
-        $entity->setStatsBonus($zeros);
 
-        $form   = $this->createForm(new RaceType(), $entity);
+        $form = $this->createForm(new RaceType(), $entity);
+
+        if ( $request->isMethod('POST') ) {
+            $form->bind($request);
+
+            if ($form->isValid()) {
+                $this->em()->persist($entity);
+                $this->em()->flush();
+
+                $this->flash('success', 'Race added');
+                return $this->redirect($this->generateUrl('admin_race', array('id' => $entity->getId())));
+            }
+        }
 
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
-            'stats'  => $statKeys,
         );
     }
 
@@ -94,13 +79,10 @@ class RaceController extends MaroonController
      * Displays a form to edit an existing Race entity.
      *
      * @Route("/{id}/edit", name="admin_race_edit")
-     * @Method("GET")
-     * @Template()
+     * @Template
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
-        $statKeys = array_keys($this->container->getParameter('maroon_rpg.base_stats'));
-
         /** @var $entity Race */
         $entity = $this->repo('Race')->find($id);
 
@@ -111,41 +93,16 @@ class RaceController extends MaroonController
         $editForm = $this->createForm(new RaceType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
-            'entity'      => $entity,
-            'stats'       => $statKeys,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
+        if ( $request->isMethod('POST') ) {
+            $editForm->bind($request);
 
-    /**
-     * Edits an existing Race entity.
-     *
-     * @Route("/{id}", name="admin_race_update")
-     * @Method("PUT")
-     * @Template("MaroonRPGBundle:Admin/Race:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
+            if ( $editForm->isValid() ) {
+                $this->em()->persist($entity);
+                $this->em()->flush();
 
-        $entity = $em->getRepository('MaroonRPGBundle:Race')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Race entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new RaceType(), $entity);
-        $editForm->bind($request);
-
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-
-            $this->flash('success', 'Race updated');
-            return $this->redirect($this->generateUrl('admin_race', array('id' => $id)));
+                $this->flash('success', 'Race updated');
+                return $this->redirect($this->generateUrl('admin_race', ['id' => $id]));
+            }
         }
 
         return array(

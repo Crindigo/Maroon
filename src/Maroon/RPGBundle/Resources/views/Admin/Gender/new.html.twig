@@ -10,7 +10,7 @@
 {% block headline %}New Gender<span id="gender_name"></span>{% endblock %}
 
 {% block body -%}
-    <form class="form-horizontal" action="{{ path('admin_gender_create') }}" method="post" {{ form_enctype(form) }}>
+    <form class="form-horizontal" action="{{ path('admin_gender_new') }}" method="post" {{ form_enctype(form) }}>
         {{ form_row(form.name, {'attr': {'data-bind': '#gender_name', 'data-bindprefix': ': '}}) }}
         {{ form_row(form.description, {'attr': {'class': 'span6'}}) }}
 

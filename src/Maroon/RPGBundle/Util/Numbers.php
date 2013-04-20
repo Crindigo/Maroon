@@ -95,4 +95,62 @@ class Numbers
         }
         return $sum;
     }
+
+    public static function getStatBonus($coefficient, $newLevel, $float = false)
+    {
+        if ( $coefficient == 0 ) {
+            return 0;
+        }
+
+        $bonus = $coefficient * log($coefficient * ($newLevel - 1));
+        if ( $float ) {
+            return $bonus;
+        }
+
+        $decimal = $bonus - floor($bonus);
+        return (mt_rand(0, 999999999) / 1000000000) < $decimal ? ceil($bonus) : floor($bonus);
+    }
+
+    /**
+     * Attempts to guess a coefficient via newton's method with the given starting stat
+     * value, desired end value, and maximum level.
+     *
+     * Actually, maybe just a fake newton's method since the real way would require me
+     * to open my Calculus book and figure out how to get the derivative of a sum function
+     * with the above stat bonus formula. Besides, this function probably isn't even going
+     * to be executed outside of development.
+     *
+     * It works pretty good actually after some tests. I dub it the PLAN method
+     * (Pure Lazy-ass Newton's Method) and hereby patent it, but not really.
+     * Especially since it's just a limit function that returns the best result it
+     * gets after 500 iterations.
+     *
+     * @param $startValue
+     * @param $endValue
+     * @param int $maxLevel
+     * @return float|int
+     */
+    public static function guessCoefficient($startValue, $endValue, $maxLevel = 100)
+    {
+        $guess = function($coeff) use ($maxLevel, $startValue) {
+            $sum = $startValue;
+            for ( $i = 2; $i <= $maxLevel; $i++ ) {
+                $sum += self::getStatBonus($coeff, $i, true);
+            }
+            return $sum;
+        };
+
+        $c = 1;
+        $g = $guess($c);
+        $epsilon = 1e-10;
+        $iters = 0;
+        while ( abs($endValue - $g) > $epsilon && $iters < 500 ) {
+            $c += ($endValue - $g) / 10000;
+            $g = $guess($c);
+            echo "$c: $g<br>";
+            $iters++;
+        }
+
+        return $c;
+    }
 }
