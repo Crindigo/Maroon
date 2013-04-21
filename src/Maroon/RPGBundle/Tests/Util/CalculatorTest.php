@@ -39,4 +39,12 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(75, $calc->result());
     }
+
+    public function testCompiled()
+    {
+        $comp = Calculator::fromExpr('(2 + 3) * x')->compile();
+        print_r($comp);
+        $calc = Calculator::fromCompiled($comp)->value('x', 4);
+        $this->assertEquals(20, $calc->result());
+    }
 }
