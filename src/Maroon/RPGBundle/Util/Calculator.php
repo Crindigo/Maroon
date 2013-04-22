@@ -16,6 +16,16 @@ namespace Maroon\RPGBundle\Util;
 class Calculator
 {
     /**
+     * @var bool
+     */
+    public static $enableCaching = false;
+
+    /**
+     * @var array
+     */
+    private static $expressionCache = [];
+
+    /**
      * @var string
      */
     private $expression;
@@ -39,6 +49,9 @@ class Calculator
     {
         $calc = new Calculator();
         $calc->expression = $expr;
+        if ( self::$enableCaching && isset(self::$expressionCache[$expr]) ) {
+            $calc->compiled = self::$expressionCache[$expr];
+        }
         return $calc;
     }
 
@@ -47,6 +60,34 @@ class Calculator
         $calc = new Calculator();
         $calc->compiled = $comp;
         return $calc;
+    }
+
+    /**
+     * Modifies the compiled expression to multiply its result by -1.
+     *
+     * @param array $compiled
+     * @return array
+     */
+    public static function negate(array $compiled)
+    {
+        $compiled[] = '-1';
+        $compiled[] = '*';
+        return $compiled;
+    }
+
+    /**
+     * Merges the two compiled expressions with the given operation.
+     *
+     * @param array $compiled1
+     * @param array $compiled2
+     * @param string $op
+     * @return array
+     */
+    public static function merge(array $compiled1, array $compiled2, $op = '+')
+    {
+        $compiled1 = array_merge($compiled1, $compiled2);
+        $compiled1[] = $op;
+        return $compiled1;
     }
 
     /**
@@ -89,7 +130,7 @@ class Calculator
 
     public function result()
     {
-        static $binaryOps = array('+', '-', '*', '/', '//', '%', '^', '>>', '<<');
+        static $binaryOps = array('+', '-', '*', '/', '//', '%', '^', '>>', '<<', '~', '#');
 
         if ( empty($this->compiled) ) {
             $this->compile();
@@ -126,6 +167,27 @@ class Calculator
                     case '^' : $stack[] = pow($v1, $v2); break;
                     case '>>': $stack[] = $v1 >> $v2; break;
                     case '<<': $stack[] = $v1 << $v2; break;
+                    case '~' :
+                        $v1 = (int) $v1;
+                        $v2 = (int) $v2;
+                        if ( $v1 == $v2 ) {
+                            $stack[] = $v1;
+                        } else {
+                            if ( $v1 > $v2 ) {
+                                $t = $v2; $v2 = $v1; $v1 = $t;
+                            }
+                            $stack[] = mt_rand($v1, $v2);
+                        }
+                        break;
+                    case '#' :
+                        $die = Numbers::clamp((int) $v1, 1, 50);
+                        $num = Numbers::clamp((int) $v2, 2, 100);
+                        $sum = 0;
+                        for ( $i = 0; $i < $die; $i++ ) {
+                            $sum += mt_rand(1, $num);
+                        }
+                        $stack[] = $sum;
+                        break;
                 }
             }
         }
@@ -135,7 +197,11 @@ class Calculator
 
     public function compile()
     {
-        return $this->toPostfix();
+        $compiled = $this->toPostfix();
+        if ( self::$enableCaching ) {
+            self::$expressionCache[$this->expression] = $compiled;
+        }
+        return $compiled;
     }
 
     private function tokenize()
@@ -239,8 +305,8 @@ class Calculator
 
     private function toPostfix()
     {
-        static $operators = array('+', '-', '*', '/', '//', '%', '^', '>>', '<<');
-        static $leftAssoc = array('+', '-', '*', '/', '//', '%', '>>', '<<');
+        static $operators = array('+', '-', '*', '/', '//', '%', '^', '>>', '<<', '~', '#');
+        static $leftAssoc = array('+', '-', '*', '/', '//', '%', '>>', '<<', '~');
         static $rightAssoc = array('^');
         static $prec = array(
             '+' => 2,
@@ -250,6 +316,8 @@ class Calculator
             '//' => 3,
             '%' => 3,
             '^' => 4,
+            '~' => 5,
+            '#' => 5,
             '>>' => 1,
             '<<' => 1,
         );

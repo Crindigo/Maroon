@@ -23,7 +23,7 @@ Maroon.stat = function(s, c)
     if ( c == 0 ) {
         return s;
     }
-    
+
     var bonus, dec;
     for ( var i = 2; i <= 100; i++ ) {
         bonus = c * Math.log(c * (i - 1));

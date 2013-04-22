@@ -96,6 +96,20 @@ class Numbers
         return $sum;
     }
 
+    public static function diceFn($sides, $dice = 1)
+    {
+        return function() use ($sides, $dice) {
+            return Numbers::diceRoll($sides, $dice);
+        };
+    }
+
+    public static function rangeFn($min, $max)
+    {
+        return function() use ($min, $max) {
+            return mt_rand($min, $max);
+        };
+    }
+
     public static function getStatBonus($coefficient, $newLevel, $float = false)
     {
         if ( $coefficient == 0 ) {

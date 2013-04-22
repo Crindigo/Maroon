@@ -29,6 +29,13 @@ abstract class AbstractAction
     private $source;
 
     /**
+     * Character that is the target of the action.
+     *
+     * @var Character
+     */
+    private $target;
+
+    /**
      * Action category, physical or magical.
      *
      * @var string
@@ -82,7 +89,7 @@ abstract class AbstractAction
 
     /**
      * @param Character $source
-     * @return $this
+     * @return AbstractAction
      */
     public function setSource(Character $source)
     {
@@ -101,8 +108,26 @@ abstract class AbstractAction
     }
 
     /**
+     * @param Character $target
+     * @return AbstractAction
+     */
+    public function setTarget(Character $target)
+    {
+        $this->target = $target;
+        return $this;
+    }
+
+    /**
+     * @return Character
+     */
+    public function getTarget()
+    {
+        return $this->target;
+    }
+
+    /**
      * @param $category
-     * @return $this
+     * @return AbstractAction
      * @throws \InvalidArgumentException
      */
     public function setCategory($category)

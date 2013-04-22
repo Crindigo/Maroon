@@ -9,7 +9,7 @@
         {% for mod in modifiers %}
             <div class="modref-block well">
                 <h3>{{ mod.name }} <small>Applies to: {% for t in mod.applicableTypes %}{{ t }}s{% if not loop.last %}, {% endif %}{% endfor %}</small></h3>
-                <p>{{ mod.description|nl2br }}</p>
+                <p>{{ mod.description|raw|nl2br }}</p>
             </div>
         {% endfor %}
     {% endfor %}

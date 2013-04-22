@@ -27,7 +27,6 @@ abstract class AbstractModifier
 
     /**
      * Returns an array of events to subscribe to.
-     * ['type' => ['event' => 'callbackMethod']]
      *
      * @return array
      */
