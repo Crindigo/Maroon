@@ -30,6 +30,11 @@ class Character
         return 1.0;
     }
 
+    public function getItemTypeProficiency(ItemType $itemType)
+    {
+        return 1.0;
+    }
+
     /**
      * Maybe!
      *

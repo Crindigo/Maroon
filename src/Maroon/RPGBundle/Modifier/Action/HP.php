@@ -4,6 +4,7 @@ namespace Maroon\RPGBundle\Modifier\Action;
 
 use Maroon\RPGBundle\Entity\CharStats;
 use Maroon\RPGBundle\Model\Action\AbstractAction;
+use Maroon\RPGBundle\Model\Action\WeaponAction;
 use Maroon\RPGBundle\Model\Item;
 use Maroon\RPGBundle\Modifier\AbstractModifier;
 use Maroon\RPGBundle\Modifier\ConfigurationException;
@@ -21,9 +22,20 @@ class HP extends AbstractModifier
 
             $elem = substr($elem, 1); // remove starting _
 
+            $weaponDamage = 0;
+            if ( $elem === 'weapon' ) {
+                if ( $action instanceof WeaponAction ) {
+                    $elem = $action->getWeapon()->getItemType()->getDamageType();
+                    $weaponDamage = $action->getWeapon()->getWeaponDamage($action->getSource());
+                } else {
+                    continue;
+                }
+            }
+
             $hp = $action->getChangeHP($elem);
             $calc = Calculator::fromCompiled($formula);
             $calc->value($this->getFormulaVars($action));
+            $calc->value('weapon_damage', $weaponDamage);
 
             $action->setChangeHP($elem, $hp + $calc->result());
         }
@@ -56,6 +68,11 @@ class HP extends AbstractModifier
 Sets HP change values by type. All HP and SP alterations in Maroon are associated with an element/type.
 If you want a "generic physical" or "non-elemental magic" type, use the physical and magic keys respectively.
 Types: physical, blunt, slash, pierce, magic, fire, ice, water, electric, earth, wind, holy, shadow, gravity
+
+For modifiers on weapons, there is a special damage type called "weapon" which will refer to the damage
+type of the weapon. In this type, you can use the "weapon_damage" formula variable which contains the
+base damage that was dealt by the weapon.
+
 You can add a - to the end of the type to make it subtract HP. So to add 50 fire damage:
 
 Action.HP:
@@ -80,7 +97,7 @@ DESC;
         $physicalTypes = $container->getParameter('maroon_rpg.attack_types.physical');
         $magicalTypes  = $container->getParameter('maroon_rpg.attack_types.magical');
 
-        foreach ( array_merge($physicalTypes, $magicalTypes) as $elem ) {
+        foreach ( array_merge($physicalTypes, $magicalTypes, ['weapon']) as $elem ) {
             // string is fine, since everything will be a formula.
             // number 4 becomes string "4" which as a formula just evaluates to 4
             $spec[$elem] = ['string', 'default' => '0'];
@@ -106,7 +123,7 @@ DESC;
         $physicalTypes = $container->getParameter('maroon_rpg.attack_types.physical');
         $magicalTypes  = $container->getParameter('maroon_rpg.attack_types.magical');
 
-        foreach ( array_merge($physicalTypes, $magicalTypes) as $elem ) {
+        foreach ( array_merge($physicalTypes, $magicalTypes, ['weapon']) as $elem ) {
             // if 'type' and 'type-' keys both exist, error
             if ( $config[$elem] !== '0' && $config["$elem-"] !== '0' ) {
                 throw new ConfigurationException($elem, "Both '$elem' and '$elem-' keys cannot co-exist.");

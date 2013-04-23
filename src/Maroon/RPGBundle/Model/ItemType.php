@@ -50,6 +50,13 @@ class ItemType
      */
     private $offHandPenalty = 1.0;
 
+    /**
+     * Damage type for weapons based on this item type.
+     *
+     * @var string
+     */
+    private $damageType = 'physical';
+
     public static function fromEntity(ItemTypeEntity $entity)
     {
 
@@ -91,5 +98,10 @@ class ItemType
             return $this->getOffHandPenalty();
         }
         return 1.0;
+    }
+
+    public function getDamageType()
+    {
+        return $this->damageType;
     }
 }

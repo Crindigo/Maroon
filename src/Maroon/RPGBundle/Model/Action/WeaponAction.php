@@ -1,19 +1,26 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: steven
- * Date: 4/14/13
- * Time: 4:04 PM
- * To change this template use File | Settings | File Templates.
- */
 
 namespace Maroon\RPGBundle\Model\Action;
 
+use Maroon\RPGBundle\Model\Item;
 
 class WeaponAction extends AbstractAction
 {
+    /**
+     * @var Item
+     */
+    private $weapon;
+
     public function getType()
     {
         return 'weapon';
+    }
+
+    /**
+     * @return Item
+     */
+    public function getWeapon()
+    {
+        return $this->weapon;
     }
 }

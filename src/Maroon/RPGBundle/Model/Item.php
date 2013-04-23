@@ -19,6 +19,14 @@ class Item
 
     use ModifierTrait;
 
+    /**
+     * @var ItemType
+     */
+    private $itemType;
+
+    private $damageMin;
+    private $damageMax;
+
     public function getModifierType()
     {
         return 'item';
@@ -32,5 +40,29 @@ class Item
     public function getStat($stat)
     {
 
+    }
+
+    /**
+     * @return ItemType
+     */
+    public function getItemType()
+    {
+        return $this->itemType;
+    }
+
+    /**
+     * Returns base weapon damage for the primary damage type.
+     *
+     * @param Character $character The character using this item, used for proficiency calculation
+     * @return int
+     */
+    public function getWeaponDamage(Character $character = null)
+    {
+        $proficiency = 1.0;
+        if ( $character !== null ) {
+            $proficiency = $character->getItemTypeProficiency($this->itemType);
+        }
+
+        return $proficiency * mt_rand($this->damageMin, $this->damageMax);
     }
 }
