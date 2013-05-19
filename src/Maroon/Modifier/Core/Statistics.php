@@ -1,11 +1,11 @@
 <?php
 
-namespace Maroon\RPGBundle\Modifier\Core;
+namespace Maroon\Modifier\Core;
 
 use Maroon\RPGBundle\Entity\CharStats;
-use Maroon\RPGBundle\Model\Character;
-use Maroon\RPGBundle\Model\Item;
-use Maroon\RPGBundle\Modifier\AbstractModifier;
+use Maroon\Model\Character;
+use Maroon\Model\Item;
+use Maroon\Modifier\AbstractModifier;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 // $item->runModifiers('equip', $character)

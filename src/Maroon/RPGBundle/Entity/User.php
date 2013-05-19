@@ -56,6 +56,13 @@ class User extends BaseUser
      */
     protected $money;
 
+    /**
+     * @var Party
+     *
+     * @ORM\OneToOne(targetEntity="Party", mappedBy="user")
+     */
+    protected $party;
+
     public function __construct()
     {
         parent::__construct();
@@ -98,5 +105,61 @@ class User extends BaseUser
     {
         $this->money = $money;
         return $this;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set characterCount
+     *
+     * @param integer $characterCount
+     * @return User
+     */
+    public function setCharacterCount($characterCount)
+    {
+        $this->characterCount = $characterCount;
+    
+        return $this;
+    }
+
+    /**
+     * Get characters
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCharacters()
+    {
+        return $this->characters;
+    }
+
+    /**
+     * Set party
+     *
+     * @param Party $party
+     * @return User
+     */
+    public function setParty(Party $party = null)
+    {
+        $this->party = $party;
+    
+        return $this;
+    }
+
+    /**
+     * Get party
+     *
+     * @return Party
+     */
+    public function getParty()
+    {
+        return $this->party;
     }
 }

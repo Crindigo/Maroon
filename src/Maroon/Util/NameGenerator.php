@@ -17,7 +17,7 @@
  * along with Maroon.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Maroon\RPGBundle\Util;
+namespace Maroon\Util;
 
 /**
  * The NameGenerator class is responsible for generating random names from the mudnames

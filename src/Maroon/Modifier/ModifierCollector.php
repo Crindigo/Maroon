@@ -1,6 +1,6 @@
 <?php
 
-namespace Maroon\RPGBundle\Modifier;
+namespace Maroon\Modifier;
 
 use Symfony\Component\Finder\Finder;
 
@@ -15,10 +15,10 @@ class ModifierCollector
         /** @var $file \SplFileInfo */
         foreach ( $finder as $file ) {
             $className = $file->getBasename('.php');
-            $class = '\Maroon\RPGBundle\Modifier\\' . $category . '\\' . $className;
+            $class = '\Maroon\Modifier\\' . $category . '\\' . $className;
             if ( class_exists($class) ) {
                 $mod = new $class();
-                if ( is_subclass_of($mod, '\Maroon\RPGBundle\Modifier\AbstractModifier') ) {
+                if ( is_subclass_of($mod, '\Maroon\Modifier\AbstractModifier') ) {
                     $modifiers[] = $mod;
                 }
             }

@@ -1,14 +1,14 @@
 <?php
 
-namespace Maroon\RPGBundle\Modifier\Action;
+namespace Maroon\Modifier\Action;
 
 use Maroon\RPGBundle\Entity\CharStats;
-use Maroon\RPGBundle\Model\Action\AbstractAction;
-use Maroon\RPGBundle\Model\Action\WeaponAction;
-use Maroon\RPGBundle\Model\Item;
-use Maroon\RPGBundle\Modifier\AbstractModifier;
-use Maroon\RPGBundle\Modifier\ConfigurationException;
-use Maroon\RPGBundle\Util\Calculator;
+use Maroon\Model\Action\AbstractAction;
+use Maroon\Model\Action\WeaponAction;
+use Maroon\Model\Item;
+use Maroon\Modifier\AbstractModifier;
+use Maroon\Modifier\ConfigurationException;
+use Maroon\Util\Calculator;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class HP extends AbstractModifier

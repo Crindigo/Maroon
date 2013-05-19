@@ -2,8 +2,8 @@
 
 namespace Maroon\RPGBundle\Validator\Constraints;
 
-use Maroon\RPGBundle\Modifier\AbstractModifier;
-use Maroon\RPGBundle\Modifier\ConfigurationException;
+use Maroon\Modifier\AbstractModifier;
+use Maroon\Modifier\ConfigurationException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;

@@ -74,6 +74,13 @@ class Character
     protected $job;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="CharJob", mappedBy="character")
+     */
+    protected $jobLevels;
+
+    /**
      * @var integer
      *
      * @ORM\Column(type="integer")
@@ -108,9 +115,33 @@ class Character
      */
     protected $equipment;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="CharSkill", mappedBy="character")
+     */
+    protected $skills;
+
+    /**
+     * @var Party
+     *
+     * @ORM\ManyToOne(targetEntity="Party", inversedBy="characters")
+     */
+    protected $party;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="smallint")
+     */
+    protected $partyPosition;
+
     public function __construct()
     {
+        $this->jobLevels = new ArrayCollection();
         $this->equipment = new ArrayCollection();
+        $this->skills = new ArrayCollection();
+        $this->partyPosition = 0;
     }
 
     public function getStat($stat)
@@ -335,5 +366,140 @@ class Character
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Set partyPosition
+     *
+     * @param integer $partyPosition
+     * @return Character
+     */
+    public function setPartyPosition($partyPosition)
+    {
+        $this->partyPosition = $partyPosition;
+    
+        return $this;
+    }
+
+    /**
+     * Get partyPosition
+     *
+     * @return integer 
+     */
+    public function getPartyPosition()
+    {
+        return $this->partyPosition;
+    }
+
+    /**
+     * Add jobLevels
+     *
+     * @param CharJob $jobLevels
+     * @return Character
+     */
+    public function addJobLevel(CharJob $jobLevels)
+    {
+        $this->jobLevels[] = $jobLevels;
+    
+        return $this;
+    }
+
+    /**
+     * Remove jobLevels
+     *
+     * @param CharJob $jobLevels
+     */
+    public function removeJobLevel(CharJob $jobLevels)
+    {
+        $this->jobLevels->removeElement($jobLevels);
+    }
+
+    /**
+     * Get jobLevels
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getJobLevels()
+    {
+        return $this->jobLevels;
+    }
+
+    /**
+     * Add equipment
+     *
+     * @param Equipment $equipment
+     * @return Character
+     */
+    public function addEquipment(Equipment $equipment)
+    {
+        $this->equipment[] = $equipment;
+    
+        return $this;
+    }
+
+    /**
+     * Remove equipment
+     *
+     * @param Equipment $equipment
+     */
+    public function removeEquipment(Equipment $equipment)
+    {
+        $this->equipment->removeElement($equipment);
+    }
+
+    /**
+     * Add skills
+     *
+     * @param CharSkill $skills
+     * @return Character
+     */
+    public function addSkill(CharSkill $skills)
+    {
+        $this->skills[] = $skills;
+    
+        return $this;
+    }
+
+    /**
+     * Remove skills
+     *
+     * @param CharSkill $skills
+     */
+    public function removeSkill(CharSkill $skills)
+    {
+        $this->skills->removeElement($skills);
+    }
+
+    /**
+     * Get skills
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getSkills()
+    {
+        return $this->skills;
+    }
+
+    /**
+     * Set party
+     *
+     * @param Party $party
+     * @return Character
+     */
+    public function setParty(Party $party = null)
+    {
+        $this->party = $party;
+    
+        return $this;
+    }
+
+    /**
+     * Get party
+     *
+     * @return Party
+     */
+    public function getParty()
+    {
+        return $this->party;
     }
 }

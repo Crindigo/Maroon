@@ -29,6 +29,11 @@ class SkillCustom
     private $skill;
 
     /**
+     * @var string The type of custom skill (job, item, race)
+     */
+    private $customType;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -36,5 +41,28 @@ class SkillCustom
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set skill
+     *
+     * @param Skill $skill
+     * @return SkillCustom
+     */
+    public function setSkill(Skill $skill = null)
+    {
+        $this->skill = $skill;
+    
+        return $this;
+    }
+
+    /**
+     * Get skill
+     *
+     * @return Skill
+     */
+    public function getSkill()
+    {
+        return $this->skill;
     }
 }

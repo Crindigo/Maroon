@@ -277,4 +277,50 @@ class Race implements \JsonSerializable
     {
         return $this->modifiers;
     }
+
+    /**
+     * Add selectableGenders
+     *
+     * @param \Maroon\RPGBundle\Entity\Gender $selectableGenders
+     * @return Race
+     */
+    public function addSelectableGender(\Maroon\RPGBundle\Entity\Gender $selectableGenders)
+    {
+        $this->selectableGenders[] = $selectableGenders;
+    
+        return $this;
+    }
+
+    /**
+     * Remove selectableGenders
+     *
+     * @param \Maroon\RPGBundle\Entity\Gender $selectableGenders
+     */
+    public function removeSelectableGender(\Maroon\RPGBundle\Entity\Gender $selectableGenders)
+    {
+        $this->selectableGenders->removeElement($selectableGenders);
+    }
+
+    /**
+     * Add selectableJobs
+     *
+     * @param \Maroon\RPGBundle\Entity\Job $selectableJobs
+     * @return Race
+     */
+    public function addSelectableJob(\Maroon\RPGBundle\Entity\Job $selectableJobs)
+    {
+        $this->selectableJobs[] = $selectableJobs;
+    
+        return $this;
+    }
+
+    /**
+     * Remove selectableJobs
+     *
+     * @param \Maroon\RPGBundle\Entity\Job $selectableJobs
+     */
+    public function removeSelectableJob(\Maroon\RPGBundle\Entity\Job $selectableJobs)
+    {
+        $this->selectableJobs->removeElement($selectableJobs);
+    }
 }

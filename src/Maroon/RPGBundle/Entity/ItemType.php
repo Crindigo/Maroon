@@ -5,12 +5,12 @@ namespace Maroon\RPGBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Skill
+ * ItemType
  *
- * @ORM\Table(name="rpg_skills")
- * @ORM\Entity(repositoryClass="Maroon\RPGBundle\Repository\SkillRepository")
+ * @ORM\Table(name="rpg_item_types")
+ * @ORM\Entity
  */
-class Skill
+class ItemType
 {
     /**
      * @var integer

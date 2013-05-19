@@ -1,15 +1,8 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: steven
- * Date: 4/14/13
- * Time: 3:53 PM
- * To change this template use File | Settings | File Templates.
- */
 
-namespace Maroon\RPGBundle\Model\Action;
+namespace Maroon\Model\Action;
 
-use Maroon\RPGBundle\Model\Character;
+use Maroon\Model\Character;
 
 /**
  * Top-level class for all actions taken in battle. Weapon attacks, skills, item usage, etc.

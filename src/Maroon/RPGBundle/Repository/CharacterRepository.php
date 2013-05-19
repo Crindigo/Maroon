@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 use Maroon\RPGBundle\Entity\CharStats;
 use Maroon\RPGBundle\Entity\Character;
+use Maroon\RPGBundle\Entity\Party;
 use Maroon\RPGBundle\Entity\User;
 
 class CharacterRepository extends EntityRepository
@@ -99,9 +100,14 @@ class CharacterRepository extends EntityRepository
 
         $user->addCharacter($char);
 
+        $party = new Party();
+        $party->addCharacter($char);
+        $party->setUser($user);
+
         $em->persist($char);
         $em->persist($stats);
         $em->persist($baseStats);
+        $em->persist($party);
 
         $em->flush();
 

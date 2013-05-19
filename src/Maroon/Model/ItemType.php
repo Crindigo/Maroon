@@ -1,6 +1,6 @@
 <?php
 
-namespace Maroon\RPGBundle\Model;
+namespace Maroon\Model;
 
 use Maroon\RPGBundle\Entity\Equipment;
 use Maroon\RPGBundle\Entity\ItemType as ItemTypeEntity;

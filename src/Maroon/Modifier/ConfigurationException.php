@@ -1,6 +1,6 @@
 <?php
 
-namespace Maroon\RPGBundle\Modifier;
+namespace Maroon\Modifier;
 
 class ConfigurationException extends \Exception
 {

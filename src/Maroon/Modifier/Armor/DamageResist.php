@@ -1,9 +1,9 @@
 <?php
 
-namespace Maroon\RPGBundle\Modifier\Armor;
+namespace Maroon\Modifier\Armor;
 
-use Maroon\RPGBundle\Model\Action\AbstractAction;
-use Maroon\RPGBundle\Modifier\AbstractModifier;
+use Maroon\Model\Action\AbstractAction;
+use Maroon\Modifier\AbstractModifier;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class DamageResist extends AbstractModifier

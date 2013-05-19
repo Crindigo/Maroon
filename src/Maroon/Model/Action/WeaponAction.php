@@ -1,8 +1,8 @@
 <?php
 
-namespace Maroon\RPGBundle\Model\Action;
+namespace Maroon\Model\Action;
 
-use Maroon\RPGBundle\Model\Item;
+use Maroon\Model\Item;
 
 class WeaponAction extends AbstractAction
 {

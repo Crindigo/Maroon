@@ -26,6 +26,12 @@ class Equipment
     const LEGS = 12;
     const FEET = 13;
 
+    const ITEM_1 = 32;
+    const ITEM_2 = 33;
+    const ITEM_3 = 34;
+    const ITEM_4 = 35;
+    const ITEM_5 = 36;
+
     /**
      * Full list of equipment slots, mapped from constant to name.
      *
@@ -45,7 +51,25 @@ class Equipment
         self::WAIST        => 'Waist',
         self::LEGS         => 'Legs',
         self::FEET         => 'Feet',
+
+        self::ITEM_1 => 'Item 1',
+        self::ITEM_2 => 'Item 2',
+        self::ITEM_3 => 'Item 3',
+        self::ITEM_4 => 'Item 4',
+        self::ITEM_5 => 'Item 5',
     );
+
+    static public function registerSlot($name)
+    {
+        $next = max(100, max(array_keys(self::$slots)) + 1);
+        self::$slots[$next] = $name;
+        return $next;
+    }
+
+    static public function unregisterSlot($id)
+    {
+        unset(self::$slots[$id]);
+    }
 
     /**
      * @var integer

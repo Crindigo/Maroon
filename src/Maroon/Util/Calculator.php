@@ -1,6 +1,6 @@
 <?php
 
-namespace Maroon\RPGBundle\Util;
+namespace Maroon\Util;
 
 /**
  * Expression calculator that processes simple mathematical equations.
@@ -11,7 +11,7 @@ namespace Maroon\RPGBundle\Util;
  * $calc->result(); // -> 70-80, damage recalculated each call
  * $calc->compile(); // -> some structure that can be cached
  *
- * @package Maroon\RPGBundle\Util
+ * @package Maroon\Util
  */
 class Calculator
 {

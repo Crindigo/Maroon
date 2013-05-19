@@ -1,6 +1,6 @@
 <?php
 
-namespace Maroon\RPGBundle\Util;
+namespace Maroon\Util;
 
 /**
  * Number-related utility functions.

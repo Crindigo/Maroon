@@ -1,6 +1,6 @@
 <?php
 
-namespace Maroon\RPGBundle\Model;
+namespace Maroon\Model;
 
 use Maroon\RPGBundle\Entity\Item as ItemEntity;
 use Maroon\RPGBundle\Modifier\ModifierTrait;
