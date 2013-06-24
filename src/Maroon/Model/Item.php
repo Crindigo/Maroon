@@ -3,7 +3,7 @@
 namespace Maroon\Model;
 
 use Maroon\RPGBundle\Entity\Item as ItemEntity;
-use Maroon\RPGBundle\Modifier\ModifierTrait;
+use Maroon\Modifier\ModifierTrait;
 
 /**
  * Represents an in-game item, this is the user-level item object while the item entity is

@@ -21,7 +21,6 @@ namespace Maroon\RPGBundle\Entity;
 
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
 use FOS\UserBundle\Entity\User as BaseUser;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -63,13 +62,29 @@ class User extends BaseUser
      */
     protected $party;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="InvEntry", mappedBy="user")
+     */
+    protected $inventory;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(type="integer")
+     */
+    protected $inventoryLimit;
+
     public function __construct()
     {
         parent::__construct();
 
         $this->characterCount = 0;
         $this->characters = new ArrayCollection();
+        $this->inventory = new ArrayCollection();
         $this->money = 0;
+        $this->inventoryLimit = 50;
     }
 
     public function addCharacter(Character $character)
@@ -161,5 +176,61 @@ class User extends BaseUser
     public function getParty()
     {
         return $this->party;
+    }
+
+    /**
+     * Add inventory
+     *
+     * @param InvEntry $inventory
+     * @return User
+     */
+    public function addInventory(InvEntry $inventory)
+    {
+        $this->inventory[] = $inventory;
+    
+        return $this;
+    }
+
+    /**
+     * Remove inventory
+     *
+     * @param InvEntry $inventory
+     */
+    public function removeInventory(InvEntry $inventory)
+    {
+        $this->inventory->removeElement($inventory);
+    }
+
+    /**
+     * Get inventory
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getInventory()
+    {
+        return $this->inventory;
+    }
+
+    /**
+     * Set inventoryLimit
+     *
+     * @param integer $inventoryLimit
+     * @return User
+     */
+    public function setInventoryLimit($inventoryLimit)
+    {
+        $this->inventoryLimit = $inventoryLimit;
+    
+        return $this;
+    }
+
+    /**
+     * Get inventoryLimit
+     *
+     * @return integer 
+     */
+    public function getInventoryLimit()
+    {
+        return $this->inventoryLimit;
     }
 }

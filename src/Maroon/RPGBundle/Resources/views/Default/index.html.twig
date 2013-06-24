@@ -62,7 +62,8 @@
             <h4>Your Party</h4>
 
             {% for char in app.user.party.sortedCharacters %}
-                <a href="{{ path('maroon_rpg_character_show', {id: char.id}) }}"><strong>{{ char.name }}</strong></a> <span class="muted bio">Level {{ char.level }} {{ char.job.name }}</span>
+                <a href="{{ path('maroon_rpg_character_show', {id: char.id}) }}"><strong>{{ char.name }}</strong></a>
+                    <span class="muted bio">Level {{ char.level }} {{ char.job.name }}</span>
                 <div class="hpsp">
                     {{ maroon_stat_bar('hp', char.stats.hp, char.stats.maxhp) }}
                     {{ maroon_stat_bar('sp', char.stats.sp, char.stats.maxsp) }}

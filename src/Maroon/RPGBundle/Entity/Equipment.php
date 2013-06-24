@@ -107,6 +107,11 @@ class Equipment
      */
     private $itemData;
 
+    public function __construct()
+    {
+        $this->itemData = array();
+    }
+
     /**
      * Get id
      *

@@ -2,7 +2,7 @@
 
 namespace Maroon\Model;
 
-use Maroon\RPGBundle\Modifier\ModifierTrait;
+use Maroon\Modifier\ModifierTrait;
 
 class Race
 {
